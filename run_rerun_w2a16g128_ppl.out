@@ -1,0 +1,33 @@
+/root/miniconda3/envs/omniquant/lib/python3.10/site-packages/transformers/utils/hub.py:124: FutureWarning: Using `TRANSFORMERS_CACHE` is deprecated and will be removed in v5 of Transformers. Use `HF_HOME` instead.
+  warnings.warn(
+auto_gptq is required for real quantization
+['main.py', '--model', '/root/autodl-tmp/models/llama-2-13b-hf', '--cache_dir', './cache', '--output_dir', './log/rerun_w2a16g128_ppl', '--resume', '/root/autodl-tmp/recovered_backup/OmniQuant/log/llama-2-13b-w2a16g128/omni_parameters.pth', '--wbits', '2', '--abits', '16', '--group_size', '128', '--lwc', '--eval_ppl', '--attn_implementation', 'eager']
+[2026-05-29 13:16:02 root](main.py 258): INFO Namespace(model='/root/autodl-tmp/models/llama-2-13b-hf', cache_dir='./cache', output_dir='./log/rerun_w2a16g128_ppl', save_dir=None, resume='/root/autodl-tmp/recovered_backup/OmniQuant/log/llama-2-13b-w2a16g128/omni_parameters.pth', real_quant=False, calib_dataset='wikitext2', nsamples=128, batch_size=1, seed=2, tasks='', eval_ppl=True, num_fewshot=0, wbits=2, abits=16, group_size=128, alpha=0.5, let_lr=0.005, lwc_lr=0.01, wd=0, epochs=10, let=False, lwc=True, aug_loss=False, symmetric=False, disable_zero_point=False, a_dynamic_method='per_token', w_dynamic_method='per_channel', limit=-1, multigpu=False, deactive_amp=False, attn_implementation='eager', net=None, act_scales=None, act_shifts=None)
+Loading checkpoint shards:   0%|                 | 0/3 [00:00<?, ?it/s]Loading checkpoint shards:  33%|███      | 1/3 [00:00<00:00,  3.78it/s]Loading checkpoint shards:  67%|██████   | 2/3 [00:00<00:00,  3.81it/s]Loading checkpoint shards: 100%|█████████| 3/3 [00:00<00:00,  4.42it/s]Loading checkpoint shards: 100%|█████████| 3/3 [00:00<00:00,  4.23it/s]
+vocab size:  32000
+[2026-05-29 13:16:04 root](main.py 324): INFO === start quantization ===
+[2026-05-29 13:16:04 root](main.py 330): INFO load calibration from ./cache/dataloader_llama_wikitext2_128.cache
+[2026-05-29 13:16:04 root](omniquant.py 50): INFO Starting ...
+[2026-05-29 13:16:07 root](omniquant.py 193): INFO === Start quantize layer 0 ===
+/root/autodl-tmp/llama_quant_project/OmniQuant/quantize/omniquant.py:211: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast():
+/root/autodl-tmp/llama_quant_project/OmniQuant/utils.py:31: FutureWarning: `torch.cuda.amp.GradScaler(args...)` is deprecated. Please use `torch.amp.GradScaler('cuda', args...)` instead.
+  self._scaler = torch.cuda.amp.GradScaler()
+/root/autodl-tmp/llama_quant_project/OmniQuant/quantize/omniquant.py:257: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with traincast():
+[2026-05-29 13:16:35 root](omniquant.py 274): INFO layer 0 iter 0 loss:5.084569056634791e-05 norm:1.1953941339015728e-06 max memory_allocated 15009.0146484375 
+[2026-05-29 13:16:56 root](omniquant.py 274): INFO layer 0 iter 1 loss:5.037915616412647e-05 norm:1.2757093372783856e-06 max memory_allocated 15009.0146484375 
+[2026-05-29 13:17:18 root](omniquant.py 274): INFO layer 0 iter 2 loss:4.9831844080472365e-05 norm:1.2255442243258585e-06 max memory_allocated 15009.0146484375 
+[2026-05-29 13:17:40 root](omniquant.py 274): INFO layer 0 iter 3 loss:4.9851671064971015e-05 norm:1.2246783853697707e-06 max memory_allocated 15009.0146484375 
+[2026-05-29 13:18:02 root](omniquant.py 274): INFO layer 0 iter 4 loss:4.9268914153799415e-05 norm:1.191688397739199e-06 max memory_allocated 15009.0146484375 
+[2026-05-29 13:18:24 root](omniquant.py 274): INFO layer 0 iter 5 loss:4.934176831739023e-05 norm:1.1909943395949085e-06 max memory_allocated 15009.3583984375 
+[2026-05-29 13:18:45 root](omniquant.py 274): INFO layer 0 iter 6 loss:4.90219536004588e-05 norm:1.1806162092398154e-06 max memory_allocated 15009.3583984375 
+[2026-05-29 13:19:07 root](omniquant.py 274): INFO layer 0 iter 7 loss:4.8670906835468486e-05 norm:1.1996253306278959e-06 max memory_allocated 15009.3583984375 
+[2026-05-29 13:19:29 root](omniquant.py 274): INFO layer 0 iter 8 loss:4.8377572966273874e-05 norm:1.2368220723146806e-06 max memory_allocated 15009.3583984375 
+[2026-05-29 13:19:51 root](omniquant.py 274): INFO layer 0 iter 9 loss:4.8470952606294304e-05 norm:1.3050957932136953e-06 max memory_allocated 15009.3583984375 
+/root/autodl-tmp/llama_quant_project/OmniQuant/quantize/omniquant.py:284: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with traincast():
+[2026-05-29 13:19:55 root](omniquant.py 193): INFO === Start quantize layer 1 ===
+/root/autodl-tmp/llama_quant_project/OmniQuant/quantize/omniquant.py:211: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast():
+[2026-05-29 13:20:19 root](omniquant.py 274): INFO layer 1 iter 0 loss:0.0002746565733104944 norm:1.1671663742163219e-06 max memory_allocated 15009.3583984375 

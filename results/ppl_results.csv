@@ -1,0 +1,5 @@
+setting,wbits,abits,group_size,wikitext2_ppl,c4_ppl,status,notes
+W4A16-g128,4,16,128,4.964747905731201,6.572091102600098,success,Best performance among the quantized baselines
+W3A16-g128,3,16,128,5.323092460632324,7.0205535888671875,success,Slight degradation compared with W4
+W2A16-g128,2,16,128,10.750126838684082,13.289410591125488,success,Significant degradation under extreme 2-bit quantization
+W2-optimized-initial,2,16,,N/A,N/A,failed,Incomplete checkpoint with only layers 0-3; loading fails at layer 4 with KeyError

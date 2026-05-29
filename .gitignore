@@ -1,0 +1,44 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Environments
+.venv/
+venv/
+env/
+conda_env/
+*.egg-info/
+
+# Large model/checkpoint files
+*.pth
+*.pt
+*.bin
+*.safetensors
+*.ckpt
+*.onnx
+
+# HuggingFace / model directories
+cache/
+models/llama-2-13b-hf/
+llama-2-13b-hf/
+hf_home/
+checkpoints/
+act_scales/
+act_shifts/
+
+# Logs that are too large or temporary
+log/
+wandb/
+nohup.out
+
+# Secrets
+.env
+*.token
+token
+huggingface_token
+*.key
+
+# System
+.DS_Store
