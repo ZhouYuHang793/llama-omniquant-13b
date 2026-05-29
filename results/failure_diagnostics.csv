@@ -1,0 +1,4 @@
+case_name,observation,diagnosis,report_usage
+W2-optimized-initial,checkpoint contains only layers 0-3,Incomplete checkpoint caused KeyError at layer 4,Used as diagnostic evidence of 2-bit instability
+PyTorch-cache-loading,torch.load failed due to weights_only default in PyTorch >=2.6,Cached testloader contains HuggingFace BatchEncoding,Fixed by using torch.load(... weights_only=False)
+W2-high-lr-run,Loss is NaN,Learning rate too aggressive for 2-bit optimization,Used to motivate safer optimization setting
