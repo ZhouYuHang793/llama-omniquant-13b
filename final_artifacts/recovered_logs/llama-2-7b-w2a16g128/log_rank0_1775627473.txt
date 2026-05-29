@@ -1,0 +1,9 @@
+[2026-04-08 13:51:13 root] (main.py 258): INFO Namespace(model='/root/autodl-tmp/llama-2-7b-hf', cache_dir='./cache', output_dir='./log/llama-2-7b-w2a16g128', save_dir=None, resume=None, real_quant=False, calib_dataset='wikitext2', nsamples=128, batch_size=1, seed=2, tasks='', eval_ppl=True, num_fewshot=0, wbits=2, abits=16, group_size=128, alpha=0.5, let_lr=0.005, lwc_lr=0.01, wd=0, epochs=20, let=False, lwc=True, aug_loss=False, symmetric=False, disable_zero_point=False, a_dynamic_method='per_token', w_dynamic_method='per_channel', limit=-1, multigpu=False, deactive_amp=False, attn_implementation='eager', net=None, act_scales=None, act_shifts=None)
+[2026-04-08 13:51:15 root] (main.py 324): INFO === start quantization ===
+[2026-04-08 13:51:16 root] (main.py 330): INFO load calibration from ./cache/dataloader_llama_wikitext2_128.cache
+[2026-04-08 13:51:16 root] (omniquant.py 50): INFO Starting ...
+[2026-04-08 13:51:16 root] (omniquant.py 193): INFO === Start quantize layer 0 ===
+[2026-04-08 13:51:28 root] (omniquant.py 274): INFO layer 0 iter 0 loss:0.00014229542284738272 norm:6.293789169831143e-07 max memory_allocated 10963.4716796875 
+[2026-04-08 13:51:39 root] (omniquant.py 274): INFO layer 0 iter 1 loss:0.00010653501522028819 norm:1.546370071991987e-06 max memory_allocated 10963.4716796875 
+[2026-04-08 13:51:49 root] (omniquant.py 274): INFO layer 0 iter 2 loss:5.0030310376314446e-05 norm:1.1326957292112638e-06 max memory_allocated 10963.4716796875 
+[2026-04-08 13:51:59 root] (omniquant.py 274): INFO layer 0 iter 3 loss:3.8397745811380446e-05 norm:3.063438498429605e-07 max memory_allocated 10963.7529296875 

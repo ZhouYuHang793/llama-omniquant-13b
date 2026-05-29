@@ -1,5 +1,5 @@
 run,setting,epochs,learning_rate,final_calibration_loss,time_hours,status,notes
-W4-baseline,W4A16,10,default,0.1408,1.69,success,Stable low-bit quantization
-W3-baseline,W3A16,10,default,0.5435,3.30,success,Higher loss than W4
+W4-baseline,W4A16,10,default,0.1408,1.69,success,Stable quantization with the lowest reconstruction loss
+W3-baseline,W3A16,10,default,0.5435,3.30,success,Higher reconstruction loss than W4 but still stable
 W2-initial,W2A16-optimized,10,2e-2,N/A,N/A,failed,Loss became NaN during optimization
 W2-safe,W2A16-optimized-safe,40,5e-3,3.4950,8.76,stable,Lower learning rate improved numerical stability
