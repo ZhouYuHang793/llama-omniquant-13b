@@ -1,0 +1,24 @@
+auto_gptq is unavailable; fake quantization is still supported
+['/root/autodl-tmp/omniquant_final/code/main.py', '--model', '/root/autodl-tmp/llama-2-7b-hf', '--cache_dir', '/root/autodl-tmp/omniquant_final/restore/OmniQuant/cache', '--calib_dataset', 'wikitext2', '--batch_size', '1', '--seed', '2', '--abits', '16', '--eval_ppl', '--output_dir', '/root/autodl-tmp/omniquant_final/experiments/7b_w4g128_n32e5_agent', '--nsamples', '32', '--wbits', '4', '--group_size', '128', '--epochs', '5', '--lwc', '--lwc_lr', '0.005']
+[2026-07-07 00:48:58 root](main.py 271): INFO Namespace(model='/root/autodl-tmp/llama-2-7b-hf', cache_dir='/root/autodl-tmp/omniquant_final/restore/OmniQuant/cache', output_dir='/root/autodl-tmp/omniquant_final/experiments/7b_w4g128_n32e5_agent', save_dir=None, resume=None, real_quant=False, calib_dataset='wikitext2', nsamples=32, batch_size=1, seed=2, tasks='', eval_ppl=True, num_fewshot=0, wbits=4, abits=16, group_size=128, alpha=0.5, let_lr=0.005, lwc_lr=0.005, wd=0, epochs=5, robust_mode=False, grad_clip=1.0, max_retries=3, nan_lr_decay=0.5, min_lr=1e-06, progress_file=None, let=False, lwc=True, aug_loss=False, symmetric=False, disable_zero_point=False, a_dynamic_method='per_token', w_dynamic_method='per_channel', limit=-1, multigpu=False, deactive_amp=False, attn_implementation='eager', net=None, act_scales=None, act_shifts=None)
+Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]Loading checkpoint shards:  50%|█████     | 1/2 [00:00<00:00,  9.00it/s]Loading checkpoint shards: 100%|██████████| 2/2 [00:00<00:00, 10.65it/s]
+vocab size:  32000
+[2026-07-07 00:48:59 root](main.py 337): INFO === start quantization ===
+[2026-07-07 00:48:59 root](main.py 343): INFO load calibration from /root/autodl-tmp/omniquant_final/restore/OmniQuant/cache/dataloader_llama_wikitext2_32.cache
+[2026-07-07 00:48:59 root](omniquant.py 104): INFO Starting ...
+[2026-07-07 00:49:00 root](omniquant.py 247): INFO === Start quantize layer 0 ===
+[2026-07-07 00:49:05 root](omniquant.py 339): INFO layer 0 iter 0 loss:6.264354851737153e-06 norm:3.1466569794247334e-08 max memory_allocated 7890.1904296875
+[2026-07-07 00:49:08 root](omniquant.py 339): INFO layer 0 iter 1 loss:6.262491751840571e-06 norm:3.094968192840497e-08 max memory_allocated 7890.1904296875
+[2026-07-07 00:49:12 root](omniquant.py 339): INFO layer 0 iter 2 loss:6.2616845752927475e-06 norm:3.077815691199248e-08 max memory_allocated 7890.1904296875
+[2026-07-07 00:49:16 root](omniquant.py 339): INFO layer 0 iter 3 loss:6.27935332886409e-06 norm:3.106647028516818e-08 max memory_allocated 7890.1904296875
+[2026-07-07 00:49:19 root](omniquant.py 339): INFO layer 0 iter 4 loss:6.250879323488334e-06 norm:3.056035424719994e-08 max memory_allocated 7890.1904296875
+[2026-07-07 00:49:20 root](omniquant.py 247): INFO === Start quantize layer 1 ===
+Traceback (most recent call last):
+  File "/root/autodl-tmp/omniquant_final/code/main.py", line 388, in <module>
+    main()
+  File "/root/autodl-tmp/omniquant_final/code/main.py", line 358, in main
+    omniquant(
+  File "/root/autodl-tmp/omniquant_final/code/quantize/omniquant.py", line 332, in omniquant
+    raise FloatingPointError(
+FloatingPointError: non-finite gradient norm in baseline mode: layer=1, epoch=0, batch=3, norm=nan
+RUN_EXIT_CODE=1

@@ -1,0 +1,205 @@
+[2026-07-07 01:43:49 root] (main.py 271): INFO Namespace(model='/root/autodl-tmp/llama-2-7b-hf', cache_dir='/root/autodl-tmp/omniquant_final/restore/OmniQuant/cache', output_dir='/root/autodl-tmp/omniquant_final/experiments/7b_w4g128_n32e5_robust_agent', save_dir=None, resume=None, real_quant=False, calib_dataset='wikitext2', nsamples=32, batch_size=1, seed=2, tasks='', eval_ppl=True, num_fewshot=0, wbits=4, abits=16, group_size=128, alpha=0.5, let_lr=0.005, lwc_lr=0.001, wd=0, epochs=5, robust_mode=True, grad_clip=1.0, max_retries=3, nan_lr_decay=0.5, min_lr=1e-06, progress_file='/root/autodl-tmp/omniquant_final/experiments/7b_w4g128_n32e5_robust_agent/quant_progress.json', let=False, lwc=True, aug_loss=False, symmetric=False, disable_zero_point=False, a_dynamic_method='per_token', w_dynamic_method='per_channel', limit=-1, multigpu=False, deactive_amp=False, attn_implementation='eager', net=None, act_scales=None, act_shifts=None)
+[2026-07-07 01:43:50 root] (main.py 337): INFO === start quantization ===
+[2026-07-07 01:43:50 root] (main.py 343): INFO load calibration from /root/autodl-tmp/omniquant_final/restore/OmniQuant/cache/dataloader_llama_wikitext2_32.cache
+[2026-07-07 01:43:50 root] (omniquant.py 104): INFO Starting ...
+[2026-07-07 01:43:51 root] (omniquant.py 247): INFO === Start quantize layer 0 ===
+[2026-07-07 01:43:56 root] (omniquant.py 506): INFO [ROBUST] layer 0 iter 0 loss:6.274853149079718e-06 norm:3.1841860703707425e-08 retry:0 mode:amp let_lr:5.000e-03 lwc_lr:1.000e-03 max memory_allocated 7889.90966796875
+[2026-07-07 01:44:00 root] (omniquant.py 506): INFO [ROBUST] layer 0 iter 1 loss:6.275043688219739e-06 norm:3.1743880413159786e-08 retry:0 mode:amp let_lr:5.000e-03 lwc_lr:1.000e-03 max memory_allocated 7889.90966796875
+[2026-07-07 01:44:04 root] (omniquant.py 506): INFO [ROBUST] layer 0 iter 2 loss:6.273253347899299e-06 norm:3.1547571666123986e-08 retry:0 mode:amp let_lr:5.000e-03 lwc_lr:1.000e-03 max memory_allocated 7889.90966796875
+[2026-07-07 01:44:07 root] (omniquant.py 506): INFO [ROBUST] layer 0 iter 3 loss:6.271658094192389e-06 norm:3.145535032444968e-08 retry:0 mode:amp let_lr:5.000e-03 lwc_lr:1.000e-03 max memory_allocated 7890.12841796875
+[2026-07-07 01:44:11 root] (omniquant.py 506): INFO [ROBUST] layer 0 iter 4 loss:6.271691745496355e-06 norm:3.1381919285422555e-08 retry:0 mode:amp let_lr:5.000e-03 lwc_lr:1.000e-03 max memory_allocated 7890.12841796875
+[2026-07-07 01:44:12 root] (omniquant.py 247): INFO === Start quantize layer 1 ===
+[2026-07-07 01:44:13 root] (omniquant.py 525): WARNING [ROBUST] rollback layer=1 epoch=0 retry=1/3: non-finite grad_norm=nan at batch=3
+[2026-07-07 01:44:13 root] (omniquant.py 565): WARNING [ROBUST] FP32 fallback retry with mode=fp32, let_lr=2.500e-03, lwc_lr=5.000e-04
+[2026-07-07 01:44:18 root] (omniquant.py 506): INFO [ROBUST] layer 1 iter 0 loss:0.005058987531810999 norm:0.0006051965756341815 retry:1 mode:fp32 let_lr:2.500e-03 lwc_lr:5.000e-04 max memory_allocated 8033.251953125
+[2026-07-07 01:44:22 root] (omniquant.py 506): INFO [ROBUST] layer 1 iter 1 loss:0.005098581314086914 norm:0.0005966548342257738 retry:0 mode:amp let_lr:2.500e-03 lwc_lr:5.000e-04 max memory_allocated 8033.251953125
+[2026-07-07 01:44:26 root] (omniquant.py 506): INFO [ROBUST] layer 1 iter 2 loss:0.005087718367576599 norm:0.0005856443312950432 retry:0 mode:amp let_lr:2.500e-03 lwc_lr:5.000e-04 max memory_allocated 8033.251953125
+[2026-07-07 01:44:29 root] (omniquant.py 506): INFO [ROBUST] layer 1 iter 3 loss:0.005062235984951258 norm:0.000571930781006813 retry:0 mode:amp let_lr:2.500e-03 lwc_lr:5.000e-04 max memory_allocated 8033.251953125
+[2026-07-07 01:44:33 root] (omniquant.py 506): INFO [ROBUST] layer 1 iter 4 loss:0.004982055630534887 norm:0.0005563621525652707 retry:0 mode:amp let_lr:2.500e-03 lwc_lr:5.000e-04 max memory_allocated 8033.251953125
+[2026-07-07 01:44:34 root] (omniquant.py 247): INFO === Start quantize layer 2 ===
+[2026-07-07 01:44:38 root] (omniquant.py 506): INFO [ROBUST] layer 2 iter 0 loss:0.005174235440790653 norm:1.7423182043785346e-06 retry:0 mode:amp let_lr:5.000e-03 lwc_lr:1.000e-03 max memory_allocated 8033.251953125
+[2026-07-07 01:44:42 root] (omniquant.py 506): INFO [ROBUST] layer 2 iter 1 loss:0.005173803307116032 norm:1.6913284071051748e-06 retry:0 mode:amp let_lr:5.000e-03 lwc_lr:1.000e-03 max memory_allocated 8033.251953125
+[2026-07-07 01:44:45 root] (omniquant.py 506): INFO [ROBUST] layer 2 iter 2 loss:0.005173360928893089 norm:1.6390634982599295e-06 retry:0 mode:amp let_lr:5.000e-03 lwc_lr:1.000e-03 max memory_allocated 8033.251953125
+[2026-07-07 01:44:49 root] (omniquant.py 506): INFO [ROBUST] layer 2 iter 3 loss:0.005172932520508766 norm:1.591843329151743e-06 retry:0 mode:amp let_lr:5.000e-03 lwc_lr:1.000e-03 max memory_allocated 8033.251953125
+[2026-07-07 01:44:53 root] (omniquant.py 506): INFO [ROBUST] layer 2 iter 4 loss:0.005171369761228561 norm:1.5470143353013555e-06 retry:0 mode:amp let_lr:5.000e-03 lwc_lr:1.000e-03 max memory_allocated 8033.251953125
+[2026-07-07 01:44:54 root] (omniquant.py 247): INFO === Start quantize layer 3 ===
+[2026-07-07 01:44:58 root] (omniquant.py 506): INFO [ROBUST] layer 3 iter 0 loss:0.005329911131411791 norm:1.7382626538164914e-07 retry:0 mode:amp let_lr:5.000e-03 lwc_lr:1.000e-03 max memory_allocated 8033.251953125
+[2026-07-07 01:45:02 root] (omniquant.py 506): INFO [ROBUST] layer 3 iter 1 loss:0.0053300498984754086 norm:1.708256149868248e-07 retry:0 mode:amp let_lr:5.000e-03 lwc_lr:1.000e-03 max memory_allocated 8033.251953125
+[2026-07-07 01:45:05 root] (omniquant.py 506): INFO [ROBUST] layer 3 iter 2 loss:0.005330693908035755 norm:1.7100148852478014e-07 retry:0 mode:amp let_lr:5.000e-03 lwc_lr:1.000e-03 max memory_allocated 8033.251953125
+[2026-07-07 01:45:09 root] (omniquant.py 506): INFO [ROBUST] layer 3 iter 3 loss:0.005330673418939114 norm:1.696141964657727e-07 retry:0 mode:amp let_lr:5.000e-03 lwc_lr:1.000e-03 max memory_allocated 8033.251953125
+[2026-07-07 01:45:13 root] (omniquant.py 506): INFO [ROBUST] layer 3 iter 4 loss:0.005330527666956186 norm:1.676769301184322e-07 retry:0 mode:amp let_lr:5.000e-03 lwc_lr:1.000e-03 max memory_allocated 8033.251953125
+[2026-07-07 01:45:14 root] (omniquant.py 247): INFO === Start quantize layer 4 ===
+[2026-07-07 01:45:18 root] (omniquant.py 506): INFO [ROBUST] layer 4 iter 0 loss:0.005718585569411516 norm:9.298941563429253e-07 retry:0 mode:amp let_lr:5.000e-03 lwc_lr:1.000e-03 max memory_allocated 8033.251953125
+[2026-07-07 01:45:22 root] (omniquant.py 506): INFO [ROBUST] layer 4 iter 1 loss:0.005718553438782692 norm:9.052183145286108e-07 retry:0 mode:amp let_lr:5.000e-03 lwc_lr:1.000e-03 max memory_allocated 8033.251953125
+[2026-07-07 01:45:25 root] (omniquant.py 506): INFO [ROBUST] layer 4 iter 2 loss:0.00571852782741189 norm:8.809797691355925e-07 retry:0 mode:amp let_lr:5.000e-03 lwc_lr:1.000e-03 max memory_allocated 8033.251953125
+[2026-07-07 01:45:29 root] (omniquant.py 506): INFO [ROBUST] layer 4 iter 3 loss:0.005718613974750042 norm:8.58067323861178e-07 retry:0 mode:amp let_lr:5.000e-03 lwc_lr:1.000e-03 max memory_allocated 8033.251953125
+[2026-07-07 01:45:33 root] (omniquant.py 506): INFO [ROBUST] layer 4 iter 4 loss:0.00571843795478344 norm:8.36631386391673e-07 retry:0 mode:amp let_lr:5.000e-03 lwc_lr:1.000e-03 max memory_allocated 8033.251953125
+[2026-07-07 01:45:34 root] (omniquant.py 247): INFO === Start quantize layer 5 ===
+[2026-07-07 01:45:38 root] (omniquant.py 506): INFO [ROBUST] layer 5 iter 0 loss:0.006055876147001982 norm:2.9934000167486374e-07 retry:0 mode:amp let_lr:5.000e-03 lwc_lr:1.000e-03 max memory_allocated 8033.251953125
+[2026-07-07 01:45:42 root] (omniquant.py 506): INFO [ROBUST] layer 5 iter 1 loss:0.006055824458599091 norm:2.956850835289515e-07 retry:0 mode:amp let_lr:5.000e-03 lwc_lr:1.000e-03 max memory_allocated 8033.251953125
+[2026-07-07 01:45:46 root] (omniquant.py 506): INFO [ROBUST] layer 5 iter 2 loss:0.006055794190615416 norm:2.9148822022762033e-07 retry:0 mode:amp let_lr:5.000e-03 lwc_lr:1.000e-03 max memory_allocated 8033.251953125
+[2026-07-07 01:45:49 root] (omniquant.py 506): INFO [ROBUST] layer 5 iter 3 loss:0.006055725272744894 norm:2.884092111798964e-07 retry:0 mode:amp let_lr:5.000e-03 lwc_lr:1.000e-03 max memory_allocated 8033.251953125
+[2026-07-07 01:45:53 root] (omniquant.py 506): INFO [ROBUST] layer 5 iter 4 loss:0.006055757869035006 norm:2.840976662810135e-07 retry:0 mode:amp let_lr:5.000e-03 lwc_lr:1.000e-03 max memory_allocated 8033.251953125
+[2026-07-07 01:45:54 root] (omniquant.py 247): INFO === Start quantize layer 6 ===
+[2026-07-07 01:45:58 root] (omniquant.py 506): INFO [ROBUST] layer 6 iter 0 loss:0.006503655109554529 norm:7.843824505471275e-07 retry:0 mode:amp let_lr:5.000e-03 lwc_lr:1.000e-03 max memory_allocated 8033.251953125
+[2026-07-07 01:46:02 root] (omniquant.py 506): INFO [ROBUST] layer 6 iter 1 loss:0.006503245793282986 norm:7.599246032441442e-07 retry:0 mode:amp let_lr:5.000e-03 lwc_lr:1.000e-03 max memory_allocated 8033.251953125
+[2026-07-07 01:46:05 root] (omniquant.py 506): INFO [ROBUST] layer 6 iter 2 loss:0.006502277683466673 norm:7.399463584079058e-07 retry:0 mode:amp let_lr:5.000e-03 lwc_lr:1.000e-03 max memory_allocated 8033.251953125
+[2026-07-07 01:46:09 root] (omniquant.py 506): INFO [ROBUST] layer 6 iter 3 loss:0.0065019391477108 norm:7.310132446036732e-07 retry:0 mode:amp let_lr:5.000e-03 lwc_lr:1.000e-03 max memory_allocated 8033.251953125
+[2026-07-07 01:46:13 root] (omniquant.py 506): INFO [ROBUST] layer 6 iter 4 loss:0.006501126568764448 norm:7.042914376143017e-07 retry:0 mode:amp let_lr:5.000e-03 lwc_lr:1.000e-03 max memory_allocated 8033.251953125
+[2026-07-07 01:46:14 root] (omniquant.py 247): INFO === Start quantize layer 7 ===
+[2026-07-07 01:46:18 root] (omniquant.py 506): INFO [ROBUST] layer 7 iter 0 loss:0.006990243215113878 norm:7.341851642195252e-07 retry:0 mode:amp let_lr:5.000e-03 lwc_lr:1.000e-03 max memory_allocated 8033.251953125
+[2026-07-07 01:46:22 root] (omniquant.py 506): INFO [ROBUST] layer 7 iter 1 loss:0.006989898160099983 norm:7.185041113189072e-07 retry:0 mode:amp let_lr:5.000e-03 lwc_lr:1.000e-03 max memory_allocated 8033.251953125
+[2026-07-07 01:46:25 root] (omniquant.py 506): INFO [ROBUST] layer 7 iter 2 loss:0.006989639718085527 norm:6.98778990226856e-07 retry:0 mode:amp let_lr:5.000e-03 lwc_lr:1.000e-03 max memory_allocated 8033.251953125
+[2026-07-07 01:46:29 root] (omniquant.py 506): INFO [ROBUST] layer 7 iter 3 loss:0.006989670917391777 norm:6.910927368153352e-07 retry:0 mode:amp let_lr:5.000e-03 lwc_lr:1.000e-03 max memory_allocated 8033.251953125
+[2026-07-07 01:46:33 root] (omniquant.py 506): INFO [ROBUST] layer 7 iter 4 loss:0.006989357993006706 norm:6.799702987336786e-07 retry:0 mode:amp let_lr:5.000e-03 lwc_lr:1.000e-03 max memory_allocated 8033.251953125
+[2026-07-07 01:46:33 root] (omniquant.py 247): INFO === Start quantize layer 8 ===
+[2026-07-07 01:46:38 root] (omniquant.py 506): INFO [ROBUST] layer 8 iter 0 loss:0.007611698936671019 norm:1.0048337344414904e-06 retry:0 mode:amp let_lr:5.000e-03 lwc_lr:1.000e-03 max memory_allocated 8033.251953125
+[2026-07-07 01:46:41 root] (omniquant.py 506): INFO [ROBUST] layer 8 iter 1 loss:0.0076110949739813805 norm:8.823512303024472e-07 retry:0 mode:amp let_lr:5.000e-03 lwc_lr:1.000e-03 max memory_allocated 8033.251953125
+[2026-07-07 01:46:45 root] (omniquant.py 506): INFO [ROBUST] layer 8 iter 2 loss:0.00761062279343605 norm:8.704105880497082e-07 retry:0 mode:amp let_lr:5.000e-03 lwc_lr:1.000e-03 max memory_allocated 8033.251953125
+[2026-07-07 01:46:49 root] (omniquant.py 506): INFO [ROBUST] layer 8 iter 3 loss:0.007610390894114971 norm:8.613688464720326e-07 retry:0 mode:amp let_lr:5.000e-03 lwc_lr:1.000e-03 max memory_allocated 8033.251953125
+[2026-07-07 01:46:53 root] (omniquant.py 506): INFO [ROBUST] layer 8 iter 4 loss:0.007611759006977081 norm:8.626839758107963e-07 retry:0 mode:amp let_lr:5.000e-03 lwc_lr:1.000e-03 max memory_allocated 8033.251953125
+[2026-07-07 01:46:53 root] (omniquant.py 247): INFO === Start quantize layer 9 ===
+[2026-07-07 01:46:58 root] (omniquant.py 506): INFO [ROBUST] layer 9 iter 0 loss:0.008332973346114159 norm:9.299807857132691e-07 retry:0 mode:amp let_lr:5.000e-03 lwc_lr:1.000e-03 max memory_allocated 8033.251953125
+[2026-07-07 01:47:01 root] (omniquant.py 506): INFO [ROBUST] layer 9 iter 1 loss:0.00833264458924532 norm:8.958999160313397e-07 retry:0 mode:amp let_lr:5.000e-03 lwc_lr:1.000e-03 max memory_allocated 8033.251953125
+[2026-07-07 01:47:05 root] (omniquant.py 506): INFO [ROBUST] layer 9 iter 2 loss:0.008332006633281708 norm:8.6889758676989e-07 retry:0 mode:amp let_lr:5.000e-03 lwc_lr:1.000e-03 max memory_allocated 8033.251953125
+[2026-07-07 01:47:09 root] (omniquant.py 506): INFO [ROBUST] layer 9 iter 3 loss:0.008331870660185814 norm:8.520240726284101e-07 retry:0 mode:amp let_lr:5.000e-03 lwc_lr:1.000e-03 max memory_allocated 8033.251953125
+[2026-07-07 01:47:12 root] (omniquant.py 506): INFO [ROBUST] layer 9 iter 4 loss:0.008331524208188057 norm:8.309040708809334e-07 retry:0 mode:amp let_lr:5.000e-03 lwc_lr:1.000e-03 max memory_allocated 8033.251953125
+[2026-07-07 01:47:13 root] (omniquant.py 247): INFO === Start quantize layer 10 ===
+[2026-07-07 01:47:18 root] (omniquant.py 506): INFO [ROBUST] layer 10 iter 0 loss:0.009167429059743881 norm:1.2192966778457048e-06 retry:0 mode:amp let_lr:5.000e-03 lwc_lr:1.000e-03 max memory_allocated 8033.251953125
+[2026-07-07 01:47:21 root] (omniquant.py 506): INFO [ROBUST] layer 10 iter 1 loss:0.009166030213236809 norm:1.175304987555137e-06 retry:0 mode:amp let_lr:5.000e-03 lwc_lr:1.000e-03 max memory_allocated 8033.251953125
+[2026-07-07 01:47:25 root] (omniquant.py 506): INFO [ROBUST] layer 10 iter 2 loss:0.009165791794657707 norm:1.146461386269948e-06 retry:0 mode:amp let_lr:5.000e-03 lwc_lr:1.000e-03 max memory_allocated 8033.251953125
+[2026-07-07 01:47:29 root] (omniquant.py 506): INFO [ROBUST] layer 10 iter 3 loss:0.00916504766792059 norm:1.116952944357763e-06 retry:0 mode:amp let_lr:5.000e-03 lwc_lr:1.000e-03 max memory_allocated 8033.251953125
+[2026-07-07 01:47:32 root] (omniquant.py 506): INFO [ROBUST] layer 10 iter 4 loss:0.00916462205350399 norm:1.0918263342318824e-06 retry:0 mode:amp let_lr:5.000e-03 lwc_lr:1.000e-03 max memory_allocated 8033.251953125
+[2026-07-07 01:47:33 root] (omniquant.py 247): INFO === Start quantize layer 11 ===
+[2026-07-07 01:47:38 root] (omniquant.py 506): INFO [ROBUST] layer 11 iter 0 loss:0.009967125952243805 norm:1.4576519333786564e-06 retry:0 mode:amp let_lr:5.000e-03 lwc_lr:1.000e-03 max memory_allocated 8033.251953125
+[2026-07-07 01:47:41 root] (omniquant.py 506): INFO [ROBUST] layer 11 iter 1 loss:0.009966031648218632 norm:1.3951602113593253e-06 retry:0 mode:amp let_lr:5.000e-03 lwc_lr:1.000e-03 max memory_allocated 8033.251953125
+[2026-07-07 01:47:45 root] (omniquant.py 506): INFO [ROBUST] layer 11 iter 2 loss:0.009966010227799416 norm:1.2890204743598588e-06 retry:0 mode:amp let_lr:5.000e-03 lwc_lr:1.000e-03 max memory_allocated 8033.251953125
+[2026-07-07 01:47:49 root] (omniquant.py 506): INFO [ROBUST] layer 11 iter 3 loss:0.009963782504200935 norm:1.2444793355825823e-06 retry:0 mode:amp let_lr:5.000e-03 lwc_lr:1.000e-03 max memory_allocated 8033.251953125
+[2026-07-07 01:47:52 root] (omniquant.py 506): INFO [ROBUST] layer 11 iter 4 loss:0.009962646290659904 norm:1.2166987062300905e-06 retry:0 mode:amp let_lr:5.000e-03 lwc_lr:1.000e-03 max memory_allocated 8033.251953125
+[2026-07-07 01:47:53 root] (omniquant.py 247): INFO === Start quantize layer 12 ===
+[2026-07-07 01:47:58 root] (omniquant.py 506): INFO [ROBUST] layer 12 iter 0 loss:0.010866828262805939 norm:1.447762315365253e-06 retry:0 mode:amp let_lr:5.000e-03 lwc_lr:1.000e-03 max memory_allocated 8033.251953125
+[2026-07-07 01:48:01 root] (omniquant.py 506): INFO [ROBUST] layer 12 iter 1 loss:0.010866167955100536 norm:1.402637394676276e-06 retry:0 mode:amp let_lr:5.000e-03 lwc_lr:1.000e-03 max memory_allocated 8033.251953125
+[2026-07-07 01:48:05 root] (omniquant.py 506): INFO [ROBUST] layer 12 iter 2 loss:0.010865508578717709 norm:1.3643559668707894e-06 retry:0 mode:amp let_lr:5.000e-03 lwc_lr:1.000e-03 max memory_allocated 8033.251953125
+[2026-07-07 01:48:09 root] (omniquant.py 506): INFO [ROBUST] layer 12 iter 3 loss:0.010864649899303913 norm:1.3302114894031547e-06 retry:0 mode:amp let_lr:5.000e-03 lwc_lr:1.000e-03 max memory_allocated 8033.251953125
+[2026-07-07 01:48:12 root] (omniquant.py 506): INFO [ROBUST] layer 12 iter 4 loss:0.010864620096981525 norm:1.2974942364962772e-06 retry:0 mode:amp let_lr:5.000e-03 lwc_lr:1.000e-03 max memory_allocated 8033.251953125
+[2026-07-07 01:48:13 root] (omniquant.py 247): INFO === Start quantize layer 13 ===
+[2026-07-07 01:48:17 root] (omniquant.py 506): INFO [ROBUST] layer 13 iter 0 loss:0.011938191018998623 norm:1.7528950593259651e-06 retry:0 mode:amp let_lr:5.000e-03 lwc_lr:1.000e-03 max memory_allocated 8033.251953125
+[2026-07-07 01:48:21 root] (omniquant.py 506): INFO [ROBUST] layer 13 iter 1 loss:0.011937668547034264 norm:1.7022807696775999e-06 retry:0 mode:amp let_lr:5.000e-03 lwc_lr:1.000e-03 max memory_allocated 8033.251953125
+[2026-07-07 01:48:25 root] (omniquant.py 506): INFO [ROBUST] layer 13 iter 2 loss:0.011936481110751629 norm:1.6539495391043602e-06 retry:0 mode:amp let_lr:5.000e-03 lwc_lr:1.000e-03 max memory_allocated 8033.251953125
+[2026-07-07 01:48:28 root] (omniquant.py 506): INFO [ROBUST] layer 13 iter 3 loss:0.011936115100979805 norm:1.6102630979730748e-06 retry:0 mode:amp let_lr:5.000e-03 lwc_lr:1.000e-03 max memory_allocated 8033.251953125
+[2026-07-07 01:48:32 root] (omniquant.py 506): INFO [ROBUST] layer 13 iter 4 loss:0.011935854330658913 norm:1.568731022416614e-06 retry:0 mode:amp let_lr:5.000e-03 lwc_lr:1.000e-03 max memory_allocated 8033.251953125
+[2026-07-07 01:48:33 root] (omniquant.py 247): INFO === Start quantize layer 14 ===
+[2026-07-07 01:48:37 root] (omniquant.py 506): INFO [ROBUST] layer 14 iter 0 loss:0.012997403740882874 norm:1.3428199281406705e-06 retry:0 mode:amp let_lr:5.000e-03 lwc_lr:1.000e-03 max memory_allocated 8033.251953125
+[2026-07-07 01:48:41 root] (omniquant.py 506): INFO [ROBUST] layer 14 iter 1 loss:0.012996979989111423 norm:1.3033184131927555e-06 retry:0 mode:amp let_lr:5.000e-03 lwc_lr:1.000e-03 max memory_allocated 8033.251953125
+[2026-07-07 01:48:45 root] (omniquant.py 506): INFO [ROBUST] layer 14 iter 2 loss:0.012997562997043133 norm:1.2782574003722402e-06 retry:0 mode:amp let_lr:5.000e-03 lwc_lr:1.000e-03 max memory_allocated 8033.251953125
+[2026-07-07 01:48:48 root] (omniquant.py 506): INFO [ROBUST] layer 14 iter 3 loss:0.012996332719922066 norm:1.2529602599897771e-06 retry:0 mode:amp let_lr:5.000e-03 lwc_lr:1.000e-03 max memory_allocated 8033.251953125
+[2026-07-07 01:48:52 root] (omniquant.py 506): INFO [ROBUST] layer 14 iter 4 loss:0.012995481491088867 norm:1.2180554449514602e-06 retry:0 mode:amp let_lr:5.000e-03 lwc_lr:1.000e-03 max memory_allocated 8033.251953125
+[2026-07-07 01:48:53 root] (omniquant.py 247): INFO === Start quantize layer 15 ===
+[2026-07-07 01:48:57 root] (omniquant.py 506): INFO [ROBUST] layer 15 iter 0 loss:0.014588934369385242 norm:2.122863406839315e-06 retry:0 mode:amp let_lr:5.000e-03 lwc_lr:1.000e-03 max memory_allocated 8033.251953125
+[2026-07-07 01:49:01 root] (omniquant.py 506): INFO [ROBUST] layer 15 iter 1 loss:0.014587713405489922 norm:2.0498468984442297e-06 retry:0 mode:amp let_lr:5.000e-03 lwc_lr:1.000e-03 max memory_allocated 8033.251953125
+[2026-07-07 01:49:05 root] (omniquant.py 506): INFO [ROBUST] layer 15 iter 2 loss:0.014587168581783772 norm:2.005783699132735e-06 retry:0 mode:amp let_lr:5.000e-03 lwc_lr:1.000e-03 max memory_allocated 8033.251953125
+[2026-07-07 01:49:09 root] (omniquant.py 506): INFO [ROBUST] layer 15 iter 3 loss:0.01458706520497799 norm:1.9491822058625985e-06 retry:0 mode:amp let_lr:5.000e-03 lwc_lr:1.000e-03 max memory_allocated 8033.251953125
+[2026-07-07 01:49:12 root] (omniquant.py 506): INFO [ROBUST] layer 15 iter 4 loss:0.014586216770112514 norm:1.899207177302742e-06 retry:0 mode:amp let_lr:5.000e-03 lwc_lr:1.000e-03 max memory_allocated 8033.251953125
+[2026-07-07 01:49:13 root] (omniquant.py 247): INFO === Start quantize layer 16 ===
+[2026-07-07 01:49:18 root] (omniquant.py 506): INFO [ROBUST] layer 16 iter 0 loss:0.017253706231713295 norm:2.5460451524850214e-06 retry:0 mode:amp let_lr:5.000e-03 lwc_lr:1.000e-03 max memory_allocated 8033.251953125
+[2026-07-07 01:49:21 root] (omniquant.py 506): INFO [ROBUST] layer 16 iter 1 loss:0.017252974212169647 norm:2.491604391252622e-06 retry:0 mode:amp let_lr:5.000e-03 lwc_lr:1.000e-03 max memory_allocated 8033.251953125
+[2026-07-07 01:49:25 root] (omniquant.py 506): INFO [ROBUST] layer 16 iter 2 loss:0.01725224032998085 norm:2.428035259072203e-06 retry:0 mode:amp let_lr:5.000e-03 lwc_lr:1.000e-03 max memory_allocated 8033.251953125
+[2026-07-07 01:49:29 root] (omniquant.py 506): INFO [ROBUST] layer 16 iter 3 loss:0.017251698300242424 norm:2.3559377950732596e-06 retry:0 mode:amp let_lr:5.000e-03 lwc_lr:1.000e-03 max memory_allocated 8033.251953125
+[2026-07-07 01:49:32 root] (omniquant.py 506): INFO [ROBUST] layer 16 iter 4 loss:0.017249513417482376 norm:2.2991898731561378e-06 retry:0 mode:amp let_lr:5.000e-03 lwc_lr:1.000e-03 max memory_allocated 8033.251953125
+[2026-07-07 01:49:33 root] (omniquant.py 247): INFO === Start quantize layer 17 ===
+[2026-07-07 01:49:38 root] (omniquant.py 506): INFO [ROBUST] layer 17 iter 0 loss:0.019325165078043938 norm:1.9899894141417462e-06 retry:0 mode:amp let_lr:5.000e-03 lwc_lr:1.000e-03 max memory_allocated 8033.251953125
+[2026-07-07 01:49:41 root] (omniquant.py 506): INFO [ROBUST] layer 17 iter 1 loss:0.019320255145430565 norm:1.8385405837761937e-06 retry:0 mode:amp let_lr:5.000e-03 lwc_lr:1.000e-03 max memory_allocated 8033.251953125
+[2026-07-07 01:49:45 root] (omniquant.py 506): INFO [ROBUST] layer 17 iter 2 loss:0.01931820809841156 norm:1.7630381989874877e-06 retry:0 mode:amp let_lr:5.000e-03 lwc_lr:1.000e-03 max memory_allocated 8033.251953125
+[2026-07-07 01:49:49 root] (omniquant.py 506): INFO [ROBUST] layer 17 iter 3 loss:0.019318100064992905 norm:1.7325139651802601e-06 retry:0 mode:amp let_lr:5.000e-03 lwc_lr:1.000e-03 max memory_allocated 8033.251953125
+[2026-07-07 01:49:53 root] (omniquant.py 506): INFO [ROBUST] layer 17 iter 4 loss:0.01931709237396717 norm:1.6915164451347664e-06 retry:0 mode:amp let_lr:5.000e-03 lwc_lr:1.000e-03 max memory_allocated 8033.251953125
+[2026-07-07 01:49:53 root] (omniquant.py 247): INFO === Start quantize layer 18 ===
+[2026-07-07 01:49:58 root] (omniquant.py 506): INFO [ROBUST] layer 18 iter 0 loss:0.022992415353655815 norm:3.3927058211702388e-06 retry:0 mode:amp let_lr:5.000e-03 lwc_lr:1.000e-03 max memory_allocated 8033.251953125
+[2026-07-07 01:50:01 root] (omniquant.py 506): INFO [ROBUST] layer 18 iter 1 loss:0.02298993244767189 norm:3.3146461646538228e-06 retry:0 mode:amp let_lr:5.000e-03 lwc_lr:1.000e-03 max memory_allocated 8033.251953125
+[2026-07-07 01:50:05 root] (omniquant.py 506): INFO [ROBUST] layer 18 iter 2 loss:0.022988250479102135 norm:3.2471825761604123e-06 retry:0 mode:amp let_lr:5.000e-03 lwc_lr:1.000e-03 max memory_allocated 8033.251953125
+[2026-07-07 01:50:09 root] (omniquant.py 506): INFO [ROBUST] layer 18 iter 3 loss:0.022984040901064873 norm:3.193886868757545e-06 retry:0 mode:amp let_lr:5.000e-03 lwc_lr:1.000e-03 max memory_allocated 8033.251953125
+[2026-07-07 01:50:13 root] (omniquant.py 506): INFO [ROBUST] layer 18 iter 4 loss:0.022987723350524902 norm:3.166687520206324e-06 retry:0 mode:amp let_lr:5.000e-03 lwc_lr:1.000e-03 max memory_allocated 8033.251953125
+[2026-07-07 01:50:13 root] (omniquant.py 247): INFO === Start quantize layer 19 ===
+[2026-07-07 01:50:18 root] (omniquant.py 506): INFO [ROBUST] layer 19 iter 0 loss:0.027159927412867546 norm:4.994258233637083e-06 retry:0 mode:amp let_lr:5.000e-03 lwc_lr:1.000e-03 max memory_allocated 8033.251953125
+[2026-07-07 01:50:21 root] (omniquant.py 506): INFO [ROBUST] layer 19 iter 1 loss:0.02715812250971794 norm:4.838237600779394e-06 retry:0 mode:amp let_lr:5.000e-03 lwc_lr:1.000e-03 max memory_allocated 8033.251953125
+[2026-07-07 01:50:25 root] (omniquant.py 506): INFO [ROBUST] layer 19 iter 2 loss:0.02715553529560566 norm:4.711710971605498e-06 retry:0 mode:amp let_lr:5.000e-03 lwc_lr:1.000e-03 max memory_allocated 8033.251953125
+[2026-07-07 01:50:29 root] (omniquant.py 506): INFO [ROBUST] layer 19 iter 3 loss:0.027150392532348633 norm:4.5502360990212765e-06 retry:0 mode:amp let_lr:5.000e-03 lwc_lr:1.000e-03 max memory_allocated 8033.251953125
+[2026-07-07 01:50:33 root] (omniquant.py 506): INFO [ROBUST] layer 19 iter 4 loss:0.02714715152978897 norm:4.398861165100243e-06 retry:0 mode:amp let_lr:5.000e-03 lwc_lr:1.000e-03 max memory_allocated 8033.251953125
+[2026-07-07 01:50:34 root] (omniquant.py 247): INFO === Start quantize layer 20 ===
+[2026-07-07 01:50:38 root] (omniquant.py 506): INFO [ROBUST] layer 20 iter 0 loss:0.03276735916733742 norm:5.509739366971189e-06 retry:0 mode:amp let_lr:5.000e-03 lwc_lr:1.000e-03 max memory_allocated 8033.251953125
+[2026-07-07 01:50:42 root] (omniquant.py 506): INFO [ROBUST] layer 20 iter 1 loss:0.03275974094867706 norm:5.420725301519269e-06 retry:0 mode:amp let_lr:5.000e-03 lwc_lr:1.000e-03 max memory_allocated 8033.251953125
+[2026-07-07 01:50:46 root] (omniquant.py 506): INFO [ROBUST] layer 20 iter 2 loss:0.03275739401578903 norm:5.303318630467402e-06 retry:0 mode:amp let_lr:5.000e-03 lwc_lr:1.000e-03 max memory_allocated 8033.251953125
+[2026-07-07 01:50:49 root] (omniquant.py 506): INFO [ROBUST] layer 20 iter 3 loss:0.03275512531399727 norm:5.1585998335212935e-06 retry:0 mode:amp let_lr:5.000e-03 lwc_lr:1.000e-03 max memory_allocated 8033.251953125
+[2026-07-07 01:50:53 root] (omniquant.py 506): INFO [ROBUST] layer 20 iter 4 loss:0.03275688365101814 norm:5.14064868184505e-06 retry:0 mode:amp let_lr:5.000e-03 lwc_lr:1.000e-03 max memory_allocated 8033.251953125
+[2026-07-07 01:50:54 root] (omniquant.py 247): INFO === Start quantize layer 21 ===
+[2026-07-07 01:50:58 root] (omniquant.py 506): INFO [ROBUST] layer 21 iter 0 loss:0.038589246571063995 norm:4.375623575469945e-06 retry:0 mode:amp let_lr:5.000e-03 lwc_lr:1.000e-03 max memory_allocated 8033.251953125
+[2026-07-07 01:51:02 root] (omniquant.py 506): INFO [ROBUST] layer 21 iter 1 loss:0.0385868139564991 norm:4.2785713958437555e-06 retry:0 mode:amp let_lr:5.000e-03 lwc_lr:1.000e-03 max memory_allocated 8033.251953125
+[2026-07-07 01:51:06 root] (omniquant.py 506): INFO [ROBUST] layer 21 iter 2 loss:0.0385814905166626 norm:4.187719241599552e-06 retry:0 mode:amp let_lr:5.000e-03 lwc_lr:1.000e-03 max memory_allocated 8033.251953125
+[2026-07-07 01:51:10 root] (omniquant.py 506): INFO [ROBUST] layer 21 iter 3 loss:0.03857825696468353 norm:4.081989118276397e-06 retry:0 mode:amp let_lr:5.000e-03 lwc_lr:1.000e-03 max memory_allocated 8033.251953125
+[2026-07-07 01:51:13 root] (omniquant.py 506): INFO [ROBUST] layer 21 iter 4 loss:0.0385756753385067 norm:4.025477664981736e-06 retry:0 mode:amp let_lr:5.000e-03 lwc_lr:1.000e-03 max memory_allocated 8033.251953125
+[2026-07-07 01:51:14 root] (omniquant.py 247): INFO === Start quantize layer 22 ===
+[2026-07-07 01:51:18 root] (omniquant.py 506): INFO [ROBUST] layer 22 iter 0 loss:0.04659959673881531 norm:1.26818340504542e-05 retry:0 mode:amp let_lr:5.000e-03 lwc_lr:1.000e-03 max memory_allocated 8033.251953125
+[2026-07-07 01:51:22 root] (omniquant.py 506): INFO [ROBUST] layer 22 iter 1 loss:0.046597760170698166 norm:1.2390602023515385e-05 retry:0 mode:amp let_lr:5.000e-03 lwc_lr:1.000e-03 max memory_allocated 8033.251953125
+[2026-07-07 01:51:26 root] (omniquant.py 506): INFO [ROBUST] layer 22 iter 2 loss:0.046590596437454224 norm:1.2011088074359577e-05 retry:0 mode:amp let_lr:5.000e-03 lwc_lr:1.000e-03 max memory_allocated 8033.251953125
+[2026-07-07 01:51:30 root] (omniquant.py 506): INFO [ROBUST] layer 22 iter 3 loss:0.04658999294042587 norm:1.1797925253631547e-05 retry:0 mode:amp let_lr:5.000e-03 lwc_lr:1.000e-03 max memory_allocated 8033.251953125
+[2026-07-07 01:51:33 root] (omniquant.py 506): INFO [ROBUST] layer 22 iter 4 loss:0.04659357666969299 norm:1.1458672815933824e-05 retry:0 mode:amp let_lr:5.000e-03 lwc_lr:1.000e-03 max memory_allocated 8033.251953125
+[2026-07-07 01:51:34 root] (omniquant.py 247): INFO === Start quantize layer 23 ===
+[2026-07-07 01:51:39 root] (omniquant.py 506): INFO [ROBUST] layer 23 iter 0 loss:0.054558590054512024 norm:5.2189757298037875e-06 retry:0 mode:amp let_lr:5.000e-03 lwc_lr:1.000e-03 max memory_allocated 8033.251953125
+[2026-07-07 01:51:42 root] (omniquant.py 506): INFO [ROBUST] layer 23 iter 1 loss:0.0545508898794651 norm:5.213104941503843e-06 retry:0 mode:amp let_lr:5.000e-03 lwc_lr:1.000e-03 max memory_allocated 8033.251953125
+[2026-07-07 01:51:46 root] (omniquant.py 506): INFO [ROBUST] layer 23 iter 2 loss:0.05454808473587036 norm:5.203325144975679e-06 retry:0 mode:amp let_lr:5.000e-03 lwc_lr:1.000e-03 max memory_allocated 8033.251953125
+[2026-07-07 01:51:50 root] (omniquant.py 506): INFO [ROBUST] layer 23 iter 3 loss:0.054545193910598755 norm:5.19309151059133e-06 retry:0 mode:amp let_lr:5.000e-03 lwc_lr:1.000e-03 max memory_allocated 8033.251953125
+[2026-07-07 01:51:53 root] (omniquant.py 506): INFO [ROBUST] layer 23 iter 4 loss:0.05454229190945625 norm:5.209934442973463e-06 retry:0 mode:amp let_lr:5.000e-03 lwc_lr:1.000e-03 max memory_allocated 8033.251953125
+[2026-07-07 01:51:54 root] (omniquant.py 247): INFO === Start quantize layer 24 ===
+[2026-07-07 01:51:59 root] (omniquant.py 506): INFO [ROBUST] layer 24 iter 0 loss:0.06442216038703918 norm:1.6107760529848747e-05 retry:0 mode:amp let_lr:5.000e-03 lwc_lr:1.000e-03 max memory_allocated 8033.251953125
+[2026-07-07 01:52:02 root] (omniquant.py 506): INFO [ROBUST] layer 24 iter 1 loss:0.06441574543714523 norm:1.6213185517699458e-05 retry:0 mode:amp let_lr:5.000e-03 lwc_lr:1.000e-03 max memory_allocated 8033.251953125
+[2026-07-07 01:52:06 root] (omniquant.py 506): INFO [ROBUST] layer 24 iter 2 loss:0.06441030651330948 norm:1.6327736375387758e-05 retry:0 mode:amp let_lr:5.000e-03 lwc_lr:1.000e-03 max memory_allocated 8033.251953125
+[2026-07-07 01:52:10 root] (omniquant.py 506): INFO [ROBUST] layer 24 iter 3 loss:0.06442704796791077 norm:1.6697507817298174e-05 retry:0 mode:amp let_lr:5.000e-03 lwc_lr:1.000e-03 max memory_allocated 8033.251953125
+[2026-07-07 01:52:13 root] (omniquant.py 506): INFO [ROBUST] layer 24 iter 4 loss:0.06442516297101974 norm:1.6861999029060826e-05 retry:0 mode:amp let_lr:5.000e-03 lwc_lr:1.000e-03 max memory_allocated 8033.251953125
+[2026-07-07 01:52:14 root] (omniquant.py 247): INFO === Start quantize layer 25 ===
+[2026-07-07 01:52:19 root] (omniquant.py 506): INFO [ROBUST] layer 25 iter 0 loss:0.07614071667194366 norm:1.2641828107007314e-05 retry:0 mode:amp let_lr:5.000e-03 lwc_lr:1.000e-03 max memory_allocated 8033.251953125
+[2026-07-07 01:52:22 root] (omniquant.py 506): INFO [ROBUST] layer 25 iter 1 loss:0.07613040506839752 norm:1.2804118341591675e-05 retry:0 mode:amp let_lr:5.000e-03 lwc_lr:1.000e-03 max memory_allocated 8033.251953125
+[2026-07-07 01:52:26 root] (omniquant.py 506): INFO [ROBUST] layer 25 iter 2 loss:0.07612618058919907 norm:1.292180058953818e-05 retry:0 mode:amp let_lr:5.000e-03 lwc_lr:1.000e-03 max memory_allocated 8033.251953125
+[2026-07-07 01:52:30 root] (omniquant.py 506): INFO [ROBUST] layer 25 iter 3 loss:0.07612760365009308 norm:1.3070483873889316e-05 retry:0 mode:amp let_lr:5.000e-03 lwc_lr:1.000e-03 max memory_allocated 8033.251953125
+[2026-07-07 01:52:33 root] (omniquant.py 506): INFO [ROBUST] layer 25 iter 4 loss:0.07611788809299469 norm:1.3318067431100644e-05 retry:0 mode:amp let_lr:5.000e-03 lwc_lr:1.000e-03 max memory_allocated 8033.251953125
+[2026-07-07 01:52:34 root] (omniquant.py 247): INFO === Start quantize layer 26 ===
+[2026-07-07 01:52:39 root] (omniquant.py 506): INFO [ROBUST] layer 26 iter 0 loss:0.09064394980669022 norm:1.6794767361716367e-05 retry:0 mode:amp let_lr:5.000e-03 lwc_lr:1.000e-03 max memory_allocated 8033.251953125
+[2026-07-07 01:52:42 root] (omniquant.py 506): INFO [ROBUST] layer 26 iter 1 loss:0.09065332263708115 norm:1.6433656128356233e-05 retry:0 mode:amp let_lr:5.000e-03 lwc_lr:1.000e-03 max memory_allocated 8033.251953125
+[2026-07-07 01:52:46 root] (omniquant.py 506): INFO [ROBUST] layer 26 iter 2 loss:0.09064925462007523 norm:1.609575883776415e-05 retry:0 mode:amp let_lr:5.000e-03 lwc_lr:1.000e-03 max memory_allocated 8033.251953125
+[2026-07-07 01:52:50 root] (omniquant.py 506): INFO [ROBUST] layer 26 iter 3 loss:0.09065096080303192 norm:1.5731306120869704e-05 retry:0 mode:amp let_lr:5.000e-03 lwc_lr:1.000e-03 max memory_allocated 8033.251953125
+[2026-07-07 01:52:53 root] (omniquant.py 506): INFO [ROBUST] layer 26 iter 4 loss:0.09063996374607086 norm:1.5385860024252906e-05 retry:0 mode:amp let_lr:5.000e-03 lwc_lr:1.000e-03 max memory_allocated 8033.251953125
+[2026-07-07 01:52:54 root] (omniquant.py 247): INFO === Start quantize layer 27 ===
+[2026-07-07 01:52:59 root] (omniquant.py 506): INFO [ROBUST] layer 27 iter 0 loss:0.10554765164852142 norm:8.820610673865303e-06 retry:0 mode:amp let_lr:5.000e-03 lwc_lr:1.000e-03 max memory_allocated 8033.251953125
+[2026-07-07 01:53:02 root] (omniquant.py 506): INFO [ROBUST] layer 27 iter 1 loss:0.1055309996008873 norm:8.559367415728047e-06 retry:0 mode:amp let_lr:5.000e-03 lwc_lr:1.000e-03 max memory_allocated 8033.251953125
+[2026-07-07 01:53:06 root] (omniquant.py 506): INFO [ROBUST] layer 27 iter 2 loss:0.1055292934179306 norm:8.353230441571213e-06 retry:0 mode:amp let_lr:5.000e-03 lwc_lr:1.000e-03 max memory_allocated 8033.251953125
+[2026-07-07 01:53:10 root] (omniquant.py 506): INFO [ROBUST] layer 27 iter 3 loss:0.10551495105028152 norm:8.100090781226754e-06 retry:0 mode:amp let_lr:5.000e-03 lwc_lr:1.000e-03 max memory_allocated 8033.251953125
+[2026-07-07 01:53:13 root] (omniquant.py 506): INFO [ROBUST] layer 27 iter 4 loss:0.10551431030035019 norm:7.909369742264971e-06 retry:0 mode:amp let_lr:5.000e-03 lwc_lr:1.000e-03 max memory_allocated 8033.251953125
+[2026-07-07 01:53:14 root] (omniquant.py 247): INFO === Start quantize layer 28 ===
+[2026-07-07 01:53:19 root] (omniquant.py 506): INFO [ROBUST] layer 28 iter 0 loss:0.12522725760936737 norm:9.785783731786069e-06 retry:0 mode:amp let_lr:5.000e-03 lwc_lr:1.000e-03 max memory_allocated 8033.251953125
+[2026-07-07 01:53:22 root] (omniquant.py 506): INFO [ROBUST] layer 28 iter 1 loss:0.1252080798149109 norm:9.634208254283294e-06 retry:0 mode:amp let_lr:5.000e-03 lwc_lr:1.000e-03 max memory_allocated 8033.251953125
+[2026-07-07 01:53:26 root] (omniquant.py 506): INFO [ROBUST] layer 28 iter 2 loss:0.12519609928131104 norm:9.476706509303767e-06 retry:0 mode:amp let_lr:5.000e-03 lwc_lr:1.000e-03 max memory_allocated 8033.251953125
+[2026-07-07 01:53:30 root] (omniquant.py 506): INFO [ROBUST] layer 28 iter 3 loss:0.1251874566078186 norm:9.383260476170108e-06 retry:0 mode:amp let_lr:5.000e-03 lwc_lr:1.000e-03 max memory_allocated 8033.251953125
+[2026-07-07 01:53:33 root] (omniquant.py 506): INFO [ROBUST] layer 28 iter 4 loss:0.1251700073480606 norm:9.310691893915646e-06 retry:0 mode:amp let_lr:5.000e-03 lwc_lr:1.000e-03 max memory_allocated 8033.251953125
+[2026-07-07 01:53:34 root] (omniquant.py 247): INFO === Start quantize layer 29 ===
+[2026-07-07 01:53:39 root] (omniquant.py 506): INFO [ROBUST] layer 29 iter 0 loss:0.14881667494773865 norm:1.566272294439841e-05 retry:0 mode:amp let_lr:5.000e-03 lwc_lr:1.000e-03 max memory_allocated 8033.251953125
+[2026-07-07 01:53:42 root] (omniquant.py 506): INFO [ROBUST] layer 29 iter 1 loss:0.14881359040737152 norm:1.5522247849730775e-05 retry:0 mode:amp let_lr:5.000e-03 lwc_lr:1.000e-03 max memory_allocated 8033.251953125
+[2026-07-07 01:53:46 root] (omniquant.py 506): INFO [ROBUST] layer 29 iter 2 loss:0.14879798889160156 norm:1.539774348202627e-05 retry:0 mode:amp let_lr:5.000e-03 lwc_lr:1.000e-03 max memory_allocated 8033.251953125
+[2026-07-07 01:53:50 root] (omniquant.py 506): INFO [ROBUST] layer 29 iter 3 loss:0.14876142144203186 norm:1.5302533938665874e-05 retry:0 mode:amp let_lr:5.000e-03 lwc_lr:1.000e-03 max memory_allocated 8033.251953125
+[2026-07-07 01:53:53 root] (omniquant.py 506): INFO [ROBUST] layer 29 iter 4 loss:0.14873629808425903 norm:1.5146109944907948e-05 retry:0 mode:amp let_lr:5.000e-03 lwc_lr:1.000e-03 max memory_allocated 8033.251953125
+[2026-07-07 01:53:54 root] (omniquant.py 247): INFO === Start quantize layer 30 ===
+[2026-07-07 01:53:58 root] (omniquant.py 525): WARNING [ROBUST] rollback layer=30 epoch=0 retry=1/3: non-finite grad_norm=nan at batch=22
+[2026-07-07 01:53:58 root] (omniquant.py 565): WARNING [ROBUST] FP32 fallback retry with mode=fp32, let_lr=2.500e-03, lwc_lr=5.000e-04
+[2026-07-07 01:54:03 root] (omniquant.py 506): INFO [ROBUST] layer 30 iter 0 loss:0.4370650053024292 norm:0.003882246557623148 retry:1 mode:fp32 let_lr:2.500e-03 lwc_lr:5.000e-04 max memory_allocated 8033.251953125
+[2026-07-07 01:54:07 root] (omniquant.py 506): INFO [ROBUST] layer 30 iter 1 loss:0.4369700849056244 norm:0.003822335274890065 retry:0 mode:amp let_lr:2.500e-03 lwc_lr:5.000e-04 max memory_allocated 8033.251953125
+[2026-07-07 01:54:10 root] (omniquant.py 506): INFO [ROBUST] layer 30 iter 2 loss:0.4370846748352051 norm:0.0037656668573617935 retry:0 mode:amp let_lr:2.500e-03 lwc_lr:5.000e-04 max memory_allocated 8033.251953125
+[2026-07-07 01:54:14 root] (omniquant.py 506): INFO [ROBUST] layer 30 iter 3 loss:0.43692296743392944 norm:0.003708080854266882 retry:0 mode:amp let_lr:2.500e-03 lwc_lr:5.000e-04 max memory_allocated 8033.251953125
+[2026-07-07 01:54:18 root] (omniquant.py 506): INFO [ROBUST] layer 30 iter 4 loss:0.4369378089904785 norm:0.003653284627944231 retry:0 mode:amp let_lr:2.500e-03 lwc_lr:5.000e-04 max memory_allocated 8033.251953125
+[2026-07-07 01:54:19 root] (omniquant.py 247): INFO === Start quantize layer 31 ===
+[2026-07-07 01:54:23 root] (omniquant.py 506): INFO [ROBUST] layer 31 iter 0 loss:0.5303428173065186 norm:9.486789349466562e-05 retry:0 mode:amp let_lr:5.000e-03 lwc_lr:1.000e-03 max memory_allocated 8033.251953125
+[2026-07-07 01:54:27 root] (omniquant.py 506): INFO [ROBUST] layer 31 iter 1 loss:0.5301986932754517 norm:9.28993831621483e-05 retry:0 mode:amp let_lr:5.000e-03 lwc_lr:1.000e-03 max memory_allocated 8033.251953125
+[2026-07-07 01:54:30 root] (omniquant.py 506): INFO [ROBUST] layer 31 iter 2 loss:0.5299869775772095 norm:9.033307287609205e-05 retry:0 mode:amp let_lr:5.000e-03 lwc_lr:1.000e-03 max memory_allocated 8033.251953125
+[2026-07-07 01:54:34 root] (omniquant.py 506): INFO [ROBUST] layer 31 iter 3 loss:0.5297635197639465 norm:8.856324711814523e-05 retry:0 mode:amp let_lr:5.000e-03 lwc_lr:1.000e-03 max memory_allocated 8033.251953125
+[2026-07-07 01:54:38 root] (omniquant.py 506): INFO [ROBUST] layer 31 iter 4 loss:0.529736340045929 norm:8.670802344568074e-05 retry:0 mode:amp let_lr:5.000e-03 lwc_lr:1.000e-03 max memory_allocated 8033.251953125
+[2026-07-07 01:54:39 root] (main.py 366): INFO 648.6332981586456
+[2026-07-07 01:54:44 root] (main.py 100): INFO load calibration from /root/autodl-tmp/omniquant_final/restore/OmniQuant/cache/testloader_llama_wikitext2_all.cache
+[2026-07-07 01:56:06 root] (main.py 144): INFO wikitext2 : 5.724181652069092
+[2026-07-07 01:56:06 root] (main.py 100): INFO load calibration from /root/autodl-tmp/omniquant_final/restore/OmniQuant/cache/testloader_llama_c4_all.cache
+[2026-07-07 01:58:13 root] (main.py 144): INFO c4 : 7.245031833648682

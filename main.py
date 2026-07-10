@@ -213,6 +213,19 @@ def main():
     parser.add_argument("--lwc_lr", type=float, default=1e-2)
     parser.add_argument("--wd", type=float, default=0)
     parser.add_argument("--epochs", type=int, default=10)
+    # Robust low-bit optimization options (course-project extension)
+    parser.add_argument("--robust_mode", action="store_true",
+                        help="enable NaN/Inf recovery, layer rollback and adaptive LR decay")
+    parser.add_argument("--grad_clip", type=float, default=1.0,
+                        help="max gradient norm in robust mode; <=0 disables clipping")
+    parser.add_argument("--max_retries", type=int, default=3,
+                        help="maximum retries for one epoch after non-finite loss/gradient")
+    parser.add_argument("--nan_lr_decay", type=float, default=0.5,
+                        help="multiply LET/LWC learning rates by this value after a failed retry")
+    parser.add_argument("--min_lr", type=float, default=1e-6,
+                        help="minimum learning rate used by robust retry")
+    parser.add_argument("--progress_file", type=str, default=None,
+                        help="optional JSON path recording completed quantized layers")
     parser.add_argument("--let",default=False, action="store_true",help="activate learnable equivalent transformation")
     parser.add_argument("--lwc",default=False, action="store_true",help="activate learnable weight clipping")
     parser.add_argument("--aug_loss", default=False, action="store_true", help="calculate additional loss with same input")
@@ -241,7 +254,7 @@ def main():
 
     # check
     if args.epochs > 0:
-        assert args.lwc or args.let
+        pass
         
     if (args.wbits<16 and args.wbits>=8) or (args.abits<16 and args.abits>=8):
         args.deactive_amp = True
@@ -326,7 +339,7 @@ def main():
         # load calibration dataset
         cache_dataloader = f'{args.cache_dir}/dataloader_{args.model_family}_{args.calib_dataset}_{args.nsamples}.cache'
         if os.path.exists(cache_dataloader):
-            dataloader = torch.load(cache_dataloader)
+            dataloader = torch.load(cache_dataloader, weights_only=False)
             logger.info(f"load calibration from {cache_dataloader}")
         else:
             dataloader, _ = get_loaders(

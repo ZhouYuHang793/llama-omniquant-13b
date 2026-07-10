@@ -1,0 +1,11 @@
+[2026-07-07 00:49:25 root] (main.py 271): INFO Namespace(model='/root/autodl-tmp/llama-2-7b-hf', cache_dir='/root/autodl-tmp/omniquant_final/restore/OmniQuant/cache', output_dir='/root/autodl-tmp/omniquant_final/experiments/7b_w3g128_n32e5_agent', save_dir=None, resume=None, real_quant=False, calib_dataset='wikitext2', nsamples=32, batch_size=1, seed=2, tasks='', eval_ppl=True, num_fewshot=0, wbits=3, abits=16, group_size=128, alpha=0.5, let_lr=0.005, lwc_lr=0.005, wd=0, epochs=5, robust_mode=False, grad_clip=1.0, max_retries=3, nan_lr_decay=0.5, min_lr=1e-06, progress_file=None, let=False, lwc=True, aug_loss=False, symmetric=False, disable_zero_point=False, a_dynamic_method='per_token', w_dynamic_method='per_channel', limit=-1, multigpu=False, deactive_amp=False, attn_implementation='eager', net=None, act_scales=None, act_shifts=None)
+[2026-07-07 00:49:27 root] (main.py 337): INFO === start quantization ===
+[2026-07-07 00:49:27 root] (main.py 343): INFO load calibration from /root/autodl-tmp/omniquant_final/restore/OmniQuant/cache/dataloader_llama_wikitext2_32.cache
+[2026-07-07 00:49:27 root] (omniquant.py 104): INFO Starting ...
+[2026-07-07 00:49:27 root] (omniquant.py 247): INFO === Start quantize layer 0 ===
+[2026-07-07 00:49:32 root] (omniquant.py 339): INFO layer 0 iter 0 loss:1.5786064977874048e-05 norm:5.962075988463766e-08 max memory_allocated 7890.1904296875
+[2026-07-07 00:49:36 root] (omniquant.py 339): INFO layer 0 iter 1 loss:1.576188333274331e-05 norm:5.940698599715688e-08 max memory_allocated 7890.1904296875
+[2026-07-07 00:49:39 root] (omniquant.py 339): INFO layer 0 iter 2 loss:1.5735096894786693e-05 norm:5.908660938303001e-08 max memory_allocated 7890.1904296875
+[2026-07-07 00:49:43 root] (omniquant.py 339): INFO layer 0 iter 3 loss:1.570540916873142e-05 norm:5.940826142136757e-08 max memory_allocated 7890.1904296875
+[2026-07-07 00:49:47 root] (omniquant.py 339): INFO layer 0 iter 4 loss:1.5800400433363393e-05 norm:6.145023689896334e-08 max memory_allocated 7890.1904296875
+[2026-07-07 00:49:47 root] (omniquant.py 247): INFO === Start quantize layer 1 ===

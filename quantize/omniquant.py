@@ -1,3 +1,6 @@
+# AutoGPTQ is only required by --real_quant.
+qlinear_triton = None
+qlinear_cuda = None
 import torch
 import torch.nn as nn
 from models.int_llama_layer import QuantLlamaDecoderLayer
@@ -17,8 +20,10 @@ from quantize.utils import let_parameters, lwc_parameters, get_omni_parameters,\
 try:
     import auto_gptq.nn_modules.qlinear.qlinear_cuda as qlinear_cuda
     import auto_gptq.nn_modules.qlinear.qlinear_triton as qlinear_triton
-except:
-    print("auto_gptq is required for real quantization")
+except Exception:
+    qlinear_cuda = None
+    qlinear_triton = None
+    print("auto_gptq is unavailable; fake quantization is still supported")
 
 
 
@@ -38,6 +43,55 @@ def add_new_module(name, original_module, added_module):
         setattr(mod_, levels[-1], added_module)
     else:
         setattr(original_module, name, added_module)     
+
+# === Course-project robust helpers ===
+def _build_omni_optimizer(qlayer, use_shift, let_lr, lwc_lr, weight_decay):
+    return torch.optim.AdamW(
+        [
+            {"params": let_parameters(qlayer, use_shift), "lr": let_lr},
+            {"params": lwc_parameters(qlayer), "lr": lwc_lr},
+        ],
+        weight_decay=weight_decay,
+    )
+
+
+def _snapshot_parameters(parameters):
+    return [parameter.detach().cpu().clone() for parameter in parameters]
+
+
+@torch.no_grad()
+def _restore_parameters(parameters, snapshot):
+    if len(parameters) != len(snapshot):
+        raise RuntimeError(
+            f"parameter snapshot mismatch: {len(parameters)} vs {len(snapshot)}"
+        )
+    for parameter, saved in zip(parameters, snapshot):
+        parameter.copy_(saved.to(device=parameter.device, dtype=parameter.dtype))
+
+
+def _atomic_torch_save(payload, final_path):
+    final_path = os.path.abspath(final_path)
+    os.makedirs(os.path.dirname(final_path), exist_ok=True)
+    temporary_path = final_path + ".tmp"
+    torch.save(payload, temporary_path)
+    os.replace(temporary_path, final_path)
+
+
+def _atomic_json_save(payload, final_path):
+    import json
+    final_path = os.path.abspath(final_path)
+    os.makedirs(os.path.dirname(final_path), exist_ok=True)
+    temporary_path = final_path + ".tmp"
+    with open(temporary_path, "w", encoding="utf-8") as handle:
+        json.dump(payload, handle, ensure_ascii=False, indent=2)
+    os.replace(temporary_path, final_path)
+
+
+def _finite_float(value):
+    if isinstance(value, torch.Tensor):
+        value = value.detach().float().cpu().item()
+    value = float(value)
+    return value, math.isfinite(value)
 
 def omniquant(
     lm,
@@ -183,7 +237,7 @@ def omniquant(
 
 
     if args.resume:
-        omni_parameters = torch.load(args.resume)
+        omni_parameters = torch.load(args.resume, map_location="cpu", weights_only=False)
     else:
         omni_parameters = {}
 
@@ -243,37 +297,284 @@ def omniquant(
         if args.epochs > 0:
             with torch.no_grad():
                 qlayer.float()      # required for AMP training
-            # create optimizer
-            optimizer = torch.optim.AdamW(
-                [{"params":let_parameters(qlayer, use_shift),"lr":args.let_lr}, {"params":lwc_parameters(qlayer),"lr":args.lwc_lr}],weight_decay=args.wd)
-            loss_scaler = utils.NativeScalerWithGradNormCount()
-            
-            for epochs in range(args.epochs):
-                loss_list = []
-                norm_list = []
-                for j in range(args.nsamples//args.batch_size):    
-                    index = j * args.batch_size
-                    # obtain output of quantization model
-                    with traincast():
-                        smooth_and_quant_temporary(qlayer, args, is_llama)
-                        quant_out = qlayer(quant_inps[index:index+args.batch_size,], attention_mask=attention_mask_batch,position_ids=position_ids)[0]
-                        loss = loss_func(fp_inps[index:index+args.batch_size,], quant_out)
-                        if args.aug_loss:
-                            loss += loss_func(fp_inps_2[index:index+args.batch_size,], quant_out)
-                    if not math.isfinite(loss.item()):
-                        logger.info("Loss is NAN, stopping training")
-                        pdb.set_trace()
-                        
-                    loss_list.append(loss.detach().cpu())
-                    optimizer.zero_grad()
-                    norm = loss_scaler(loss, optimizer,parameters= get_omni_parameters(qlayer, use_shift)).cpu()
-                    norm_list.append(norm.data)
 
-                loss_mean = torch.stack(loss_list).mean()
-                norm_mean = torch.stack(norm_list).mean()
-                logger.info(f"layer {i} iter {epochs} loss:{loss_mean} norm:{norm_mean} max memory_allocated {torch.cuda.max_memory_allocated(lm._device) / 1024**2} ")
+            if not args.robust_mode:
+                optimizer = torch.optim.AdamW(
+                    [{"params":let_parameters(qlayer, use_shift),"lr":args.let_lr},
+                     {"params":lwc_parameters(qlayer),"lr":args.lwc_lr}],
+                    weight_decay=args.wd)
+                loss_scaler = utils.NativeScalerWithGradNormCount()
+
+                for epochs in range(args.epochs):
+                    loss_list = []
+                    norm_list = []
+                    for j in range(args.nsamples//args.batch_size):
+                        index = j * args.batch_size
+                        with traincast():
+                            smooth_and_quant_temporary(qlayer, args, is_llama)
+                            quant_out = qlayer(quant_inps[index:index+args.batch_size,], attention_mask=attention_mask_batch,position_ids=position_ids)[0]
+                            loss = loss_func(fp_inps[index:index+args.batch_size,], quant_out)
+                            if args.aug_loss:
+                                loss += loss_func(fp_inps_2[index:index+args.batch_size,], quant_out)
+                        loss_value, loss_is_finite = _finite_float(loss)
+                        if not loss_is_finite:
+                            raise FloatingPointError(
+                                f"non-finite loss in baseline mode: layer={i}, epoch={epochs}, batch={j}, loss={loss_value}"
+                            )
+                        loss_list.append(loss.detach().cpu())
+                        optimizer.zero_grad()
+                        norm = loss_scaler(
+                            loss, optimizer,
+                            parameters=get_omni_parameters(qlayer, use_shift),
+                        ).cpu()
+                        norm_value, norm_is_finite = _finite_float(norm)
+                        if not norm_is_finite:
+                            raise FloatingPointError(
+                                f"non-finite gradient norm in baseline mode: layer={i}, epoch={epochs}, batch={j}, norm={norm_value}"
+                            )
+                        norm_list.append(norm.data)
+
+                    loss_mean = torch.stack(loss_list).mean()
+                    norm_mean = torch.stack(norm_list).mean()
+                    logger.info(
+                        f"layer {i} iter {epochs} loss:{loss_mean} norm:{norm_mean} "
+                        f"max memory_allocated {torch.cuda.max_memory_allocated(lm._device) / 1024**2}"
+                    )
+                del optimizer
+
+            else:
+                trainable_parameters = list(get_omni_parameters(qlayer, use_shift))
+                if not trainable_parameters:
+                    raise RuntimeError("robust_mode found no learnable LET/LWC parameters")
+
+                current_let_lr = float(args.let_lr)
+                current_lwc_lr = float(args.lwc_lr)
+                optimizer = _build_omni_optimizer(
+                    qlayer, use_shift, current_let_lr, current_lwc_lr, args.wd
+                )
+                amp_enabled = not args.deactive_amp
+                grad_scaler = torch.cuda.amp.GradScaler(enabled=amp_enabled)
+
+                for epochs in range(args.epochs):
+                    retry = 0
+                    epoch_skipped = False
+
+                    while True:
+                        # Retry hierarchy:
+                        #   retry 0: original AMP path
+                        #   retry 1+: full-precision forward/backward
+                        #   retry 2+: sanitize any remaining non-finite gradient entries
+                        fp32_fallback = retry >= 1
+                        sanitize_gradients = retry >= 2
+
+                        epoch_snapshot = _snapshot_parameters(trainable_parameters)
+                        loss_list = []
+                        norm_list = []
+                        failure_reason = None
+
+                        for j in range(args.nsamples // args.batch_size):
+                            index = j * args.batch_size
+                            optimizer.zero_grad(set_to_none=True)
+
+                            if fp32_fallback:
+                                batch_inps = quant_inps[
+                                    index:index + args.batch_size,
+                                ].float()
+                                batch_targets = fp_inps[
+                                    index:index + args.batch_size,
+                                ].float()
+
+                                batch_attention_mask = attention_mask_batch
+                                if (
+                                    isinstance(batch_attention_mask, torch.Tensor)
+                                    and batch_attention_mask.is_floating_point()
+                                ):
+                                    batch_attention_mask = batch_attention_mask.float()
+
+                                with nullcontext():
+                                    smooth_and_quant_temporary(qlayer, args, is_llama)
+                                    quant_out = qlayer(
+                                        batch_inps,
+                                        attention_mask=batch_attention_mask,
+                                        position_ids=position_ids,
+                                    )[0]
+                                    loss = loss_func(
+                                        batch_targets,
+                                        quant_out.float(),
+                                    )
+                                    if args.aug_loss:
+                                        batch_targets_2 = fp_inps_2[
+                                            index:index + args.batch_size,
+                                        ].float()
+                                        loss += loss_func(
+                                            batch_targets_2,
+                                            quant_out.float(),
+                                        )
+                            else:
+                                with traincast():
+                                    smooth_and_quant_temporary(qlayer, args, is_llama)
+                                    quant_out = qlayer(
+                                        quant_inps[
+                                            index:index + args.batch_size,
+                                        ],
+                                        attention_mask=attention_mask_batch,
+                                        position_ids=position_ids,
+                                    )[0]
+                                    loss = loss_func(
+                                        fp_inps[
+                                            index:index + args.batch_size,
+                                        ],
+                                        quant_out,
+                                    )
+                                    if args.aug_loss:
+                                        loss += loss_func(
+                                            fp_inps_2[
+                                                index:index + args.batch_size,
+                                            ],
+                                            quant_out,
+                                        )
+
+                            loss_value, loss_is_finite = _finite_float(loss)
+                            if not loss_is_finite:
+                                failure_reason = (
+                                    f"non-finite loss={loss_value} at batch={j}"
+                                )
+                                break
+
+                            if fp32_fallback:
+                                loss.backward()
+                            else:
+                                grad_scaler.scale(loss).backward()
+                                grad_scaler.unscale_(optimizer)
+
+                            nonfinite_entries = 0
+                            if sanitize_gradients:
+                                for parameter in trainable_parameters:
+                                    if parameter.grad is None:
+                                        continue
+                                    bad_mask = ~torch.isfinite(parameter.grad)
+                                    bad_count = int(bad_mask.sum().item())
+                                    if bad_count:
+                                        nonfinite_entries += bad_count
+                                        parameter.grad.nan_to_num_(
+                                            nan=0.0,
+                                            posinf=0.0,
+                                            neginf=0.0,
+                                        )
+
+                                if nonfinite_entries:
+                                    logger.warning(
+                                        f"[ROBUST] sanitized {nonfinite_entries} "
+                                        f"non-finite gradient entries at "
+                                        f"layer={i}, epoch={epochs}, batch={j}"
+                                    )
+
+                            max_norm = (
+                                float(args.grad_clip)
+                                if args.grad_clip > 0
+                                else float("inf")
+                            )
+                            grad_norm = torch.nn.utils.clip_grad_norm_(
+                                trainable_parameters,
+                                max_norm=max_norm,
+                            )
+                            norm_value, norm_is_finite = _finite_float(grad_norm)
+
+                            if not norm_is_finite:
+                                failure_reason = (
+                                    f"non-finite grad_norm={norm_value} "
+                                    f"at batch={j}"
+                                )
+                                optimizer.zero_grad(set_to_none=True)
+                                break
+
+                            if fp32_fallback:
+                                optimizer.step()
+                            else:
+                                grad_scaler.step(optimizer)
+                                grad_scaler.update()
+
+                            loss_list.append(loss.detach().float().cpu())
+                            norm_list.append(
+                                torch.tensor(norm_value, dtype=torch.float32)
+                            )
+
+                        if failure_reason is None:
+                            loss_mean = torch.stack(loss_list).mean()
+                            norm_mean = torch.stack(norm_list).mean()
+                            mode = "fp32" if fp32_fallback else "amp"
+                            logger.info(
+                                f"[ROBUST] layer {i} iter {epochs} "
+                                f"loss:{loss_mean} norm:{norm_mean} "
+                                f"retry:{retry} mode:{mode} "
+                                f"let_lr:{current_let_lr:.3e} "
+                                f"lwc_lr:{current_lwc_lr:.3e} "
+                                f"max memory_allocated "
+                                f"{torch.cuda.max_memory_allocated(lm._device) / 1024**2}"
+                            )
+                            break
+
+                        clear_temp_variable(qlayer)
+                        _restore_parameters(
+                            trainable_parameters,
+                            epoch_snapshot,
+                        )
+                        optimizer.zero_grad(set_to_none=True)
+                        retry += 1
+
+                        logger.warning(
+                            f"[ROBUST] rollback layer={i} epoch={epochs} "
+                            f"retry={retry}/{args.max_retries}: "
+                            f"{failure_reason}"
+                        )
+
+                        if retry > args.max_retries:
+                            logger.warning(
+                                f"[ROBUST] SAFE_SKIP layer={i} epoch={epochs}: "
+                                f"retries exhausted; retain last finite parameters"
+                            )
+                            epoch_skipped = True
+                            break
+
+                        current_let_lr = max(
+                            current_let_lr * args.nan_lr_decay,
+                            args.min_lr,
+                        )
+                        current_lwc_lr = max(
+                            current_lwc_lr * args.nan_lr_decay,
+                            args.min_lr,
+                        )
+
+                        del optimizer
+                        optimizer = _build_omni_optimizer(
+                            qlayer,
+                            use_shift,
+                            current_let_lr,
+                            current_lwc_lr,
+                            args.wd,
+                        )
+
+                        # Retries run in true FP32 and do not use scaling.
+                        grad_scaler = torch.cuda.amp.GradScaler(enabled=False)
+
+                        next_mode = (
+                            "fp32+sanitize"
+                            if retry >= 2
+                            else "fp32"
+                        )
+                        logger.warning(
+                            f"[ROBUST] FP32 fallback retry with "
+                            f"mode={next_mode}, "
+                            f"let_lr={current_let_lr:.3e}, "
+                            f"lwc_lr={current_lwc_lr:.3e}"
+                        )
+
+                    if epoch_skipped:
+                        continue
+
+                del optimizer
+
             clear_temp_variable(qlayer)
-            del optimizer
         qlayer.half() 
         # real smooth and quantization
         smooth_and_quant_inplace(qlayer, args, is_llama)
@@ -287,11 +588,35 @@ def omniquant(
             register_scales_and_zeros(qlayer)
             layers[i] = qlayer.to("cpu")
             omni_parameters[i] = omni_state_dict(qlayer)
-            torch.save(omni_parameters, os.path.join(args.output_dir, f"omni_parameters.pth"))
+            checkpoint_path = os.path.join(args.output_dir, "omni_parameters.pth")
+            _atomic_torch_save(omni_parameters, checkpoint_path)
+
+            progress_path = (
+                args.progress_file
+                if args.progress_file
+                else os.path.join(args.output_dir, "quant_progress.json")
+            )
+            completed_layers = sorted(int(key) for key in omni_parameters.keys())
+            _atomic_json_save(
+                {
+                    "completed_layers": completed_layers,
+                    "last_completed_layer": i,
+                    "num_layers": len(layers),
+                    "complete": len(completed_layers) == len(layers),
+                    "robust_mode": bool(args.robust_mode),
+                    "wbits": int(args.wbits),
+                    "abits": int(args.abits),
+                    "group_size": args.group_size,
+                    "epochs": int(args.epochs),
+                },
+                progress_path,
+            )
         else:
             register_scales_and_zeros(qlayer)
             layers[i] = qlayer.to("cpu")
         if args.real_quant:
+            if qlinear_triton is None or qlinear_cuda is None:
+                raise ImportError("--real_quant requires a working AutoGPTQ installation")
             assert args.wbits in [2,3,4] and args.abits >= 16   # only support weight-only quantization
             named_linears = get_named_linears(qlayer)
             for name, module in named_linears.items():

@@ -1,0 +1,13 @@
+{
+  "completed_layers": [
+    0
+  ],
+  "last_completed_layer": 0,
+  "num_layers": 32,
+  "complete": false,
+  "robust_mode": false,
+  "wbits": 3,
+  "abits": 16,
+  "group_size": 128,
+  "epochs": 5
+}

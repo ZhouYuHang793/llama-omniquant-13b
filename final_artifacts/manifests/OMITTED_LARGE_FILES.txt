@@ -1,0 +1,42 @@
+# Omitted large files
+
+These files are intentionally omitted from the main logs/code package.
+
+## Large model/cache/checkpoint-like files under ROOT
+/root/autodl-tmp/omniquant_final/env/lib/python3.10/site-packages/__editable__.omniquant-0.1.0.pth	4 KB
+/root/autodl-tmp/omniquant_final/env/lib/python3.10/site-packages/a1_coverage.pth	4 KB
+/root/autodl-tmp/omniquant_final/env/lib/python3.10/site-packages/coloredlogs.pth	4 KB
+/root/autodl-tmp/omniquant_final/env/lib/python3.10/site-packages/distutils-precedence.pth	4 KB
+/root/autodl-tmp/omniquant_final/experiments/7b_w2_robust_smoke/omni_parameters.pth	197784 KB
+/root/autodl-tmp/omniquant_final/experiments/7b_w2_robust_smoke_v1_failed/omni_parameters.pth	185424 KB
+/root/autodl-tmp/omniquant_final/experiments/7b_w2g128_n32e10_baseline/omni_parameters.pth	6184 KB
+/root/autodl-tmp/omniquant_final/experiments/7b_w2g128_n32e10_robust/omni_parameters.pth	197784 KB
+/root/autodl-tmp/omniquant_final/experiments/7b_w2g128_n32e10_robust_lr1e3_agent/omni_parameters.pth	197784 KB
+/root/autodl-tmp/omniquant_final/experiments/7b_w2g64_n32e10_robust_lr1e3_agent/omni_parameters.pth	395416 KB
+/root/autodl-tmp/omniquant_final/experiments/7b_w3g128_n32e5_agent/omni_parameters.pth	6184 KB
+/root/autodl-tmp/omniquant_final/experiments/7b_w3g128_n32e5_robust_agent/omni_parameters.pth	197784 KB
+/root/autodl-tmp/omniquant_final/experiments/7b_w4g128_n32e5_agent/omni_parameters.pth	6184 KB
+/root/autodl-tmp/omniquant_final/experiments/7b_w4g128_n32e5_robust_agent/omni_parameters.pth	197784 KB
+/root/autodl-tmp/omniquant_final/restore/OmniQuant/act_scales/llama-2-13b-hf.pt	7068 KB
+/root/autodl-tmp/omniquant_final/restore/OmniQuant/act_scales/llama-2-7b-hf.pt	4536 KB
+/root/autodl-tmp/omniquant_final/restore/OmniQuant/act_shifts/llama-2-13b-hf.pt	7068 KB
+/root/autodl-tmp/omniquant_final/restore/OmniQuant/act_shifts/llama-2-7b-hf.pt	4536 KB
+/root/autodl-tmp/omniquant_final/restore/OmniQuant/cache/dataloader_llama_wikitext2_1.cache	22476 KB
+/root/autodl-tmp/omniquant_final/restore/OmniQuant/cache/dataloader_llama_wikitext2_128.cache	24556 KB
+/root/autodl-tmp/omniquant_final/restore/OmniQuant/cache/dataloader_llama_wikitext2_32.cache	22984 KB
+/root/autodl-tmp/omniquant_final/restore/OmniQuant/cache/testloader_llama_c4_all.cache	4100 KB
+/root/autodl-tmp/omniquant_final/restore/OmniQuant/cache/testloader_llama_wikitext2_all.cache	5340 KB
+/root/autodl-tmp/omniquant_final/restore/OmniQuant/log/llama-2-13b-w2a16g128-full/omni_parameters.pth	390268 KB
+/root/autodl-tmp/omniquant_final/restore/OmniQuant/log/llama-2-13b-w2a16g128/omni_parameters.pth	387388 KB
+/root/autodl-tmp/omniquant_final/restore/OmniQuant/log/llama-2-13b-w3a16g128/omni_parameters.pth	387388 KB
+/root/autodl-tmp/omniquant_final/restore/OmniQuant/log/llama-2-13b-w4a16g128-zeroshot/omni_parameters.pth	387388 KB
+/root/autodl-tmp/omniquant_final/restore/OmniQuant/log/llama-2-13b-w4a16g128/omni_parameters.pth	387388 KB
+/root/autodl-tmp/omniquant_final/restore/OmniQuant/log/llama-2-7b-w2a16/omni_parameters.pth	5460 KB
+/root/autodl-tmp/omniquant_final/restore/OmniQuant/log/llama-2-7b-w2a16g128/omni_parameters.pth	197784 KB
+/root/autodl-tmp/omniquant_final/restore/OmniQuant/log/llama-2-7b-w3a16g128/omni_parameters.pth	197784 KB
+/root/autodl-tmp/omniquant_final/restore/OmniQuant/log/llama-2-7b-w4a16/omni_parameters.pth	5460 KB
+/root/autodl-tmp/omniquant_final/restore/OmniQuant/log/llama-2-7b-w4a16g128/omni_parameters.pth	197784 KB
+/root/autodl-tmp/omniquant_final/restore/OmniQuant/log/llama-2-7b-w4a4/omni_parameters.pth	7316 KB
+/root/autodl-tmp/omniquant_final/restore/OmniQuant/log/w2_optimized/omni_parameters.pth	1140 KB
+/root/autodl-tmp/omniquant_final/restore/OmniQuant/log/w3_optimized/omni_parameters.pth	8504 KB
+/root/autodl-tmp/omniquant_final/restore/OmniQuant/log/w4_optimized/omni_parameters.pth	8504 KB

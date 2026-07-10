@@ -1,0 +1,37 @@
+auto_gptq is unavailable; fake quantization is still supported
+['main.py', '--model', '/root/autodl-tmp/llama-2-7b-hf', '--cache_dir', '/root/autodl-tmp/omniquant_final/restore/OmniQuant/cache', '--output_dir', '/root/autodl-tmp/omniquant_final/experiments/7b_w2g128_n32e10_baseline', '--calib_dataset', 'wikitext2', '--nsamples', '32', '--batch_size', '1', '--seed', '2', '--wbits', '2', '--abits', '16', '--group_size', '128', '--epochs', '10', '--lwc', '--lwc_lr', '0.005', '--eval_ppl']
+[2026-07-05 15:45:48 root](main.py 271): INFO Namespace(model='/root/autodl-tmp/llama-2-7b-hf', cache_dir='/root/autodl-tmp/omniquant_final/restore/OmniQuant/cache', output_dir='/root/autodl-tmp/omniquant_final/experiments/7b_w2g128_n32e10_baseline', save_dir=None, resume=None, real_quant=False, calib_dataset='wikitext2', nsamples=32, batch_size=1, seed=2, tasks='', eval_ppl=True, num_fewshot=0, wbits=2, abits=16, group_size=128, alpha=0.5, let_lr=0.005, lwc_lr=0.005, wd=0, epochs=10, robust_mode=False, grad_clip=1.0, max_retries=3, nan_lr_decay=0.5, min_lr=1e-06, progress_file=None, let=False, lwc=True, aug_loss=False, symmetric=False, disable_zero_point=False, a_dynamic_method='per_token', w_dynamic_method='per_channel', limit=-1, multigpu=False, deactive_amp=False, attn_implementation='eager', net=None, act_scales=None, act_shifts=None)
+Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]Loading checkpoint shards:  50%|█████     | 1/2 [00:00<00:00,  5.32it/s]Loading checkpoint shards: 100%|██████████| 2/2 [00:00<00:00,  5.93it/s]Loading checkpoint shards: 100%|██████████| 2/2 [00:00<00:00,  5.82it/s]
+vocab size:  32000
+[2026-07-05 15:45:49 root](main.py 337): INFO === start quantization ===
+get_wikitext2
+Using the latest cached version of the dataset since wikitext couldn't be found on the Hugging Face Hub
+[2026-07-05 15:47:29 datasets.load](load.py 1568): WARNING Using the latest cached version of the dataset since wikitext couldn't be found on the Hugging Face Hub
+Found the latest cached dataset configuration 'wikitext-2-raw-v1' at /root/.cache/huggingface/datasets/wikitext/wikitext-2-raw-v1/0.0.0/b08601e04326c79dfdd32d625aee71d232d685c3 (last modified on Sun Jul  5 15:05:25 2026).
+[2026-07-05 15:47:29 datasets.packaged_modules.cache.cache](cache.py 70): WARNING Found the latest cached dataset configuration 'wikitext-2-raw-v1' at /root/.cache/huggingface/datasets/wikitext/wikitext-2-raw-v1/0.0.0/b08601e04326c79dfdd32d625aee71d232d685c3 (last modified on Sun Jul  5 15:05:25 2026).
+Using the latest cached version of the dataset since wikitext couldn't be found on the Hugging Face Hub
+[2026-07-05 15:49:09 datasets.load](load.py 1568): WARNING Using the latest cached version of the dataset since wikitext couldn't be found on the Hugging Face Hub
+Found the latest cached dataset configuration 'wikitext-2-raw-v1' at /root/.cache/huggingface/datasets/wikitext/wikitext-2-raw-v1/0.0.0/b08601e04326c79dfdd32d625aee71d232d685c3 (last modified on Sun Jul  5 15:05:25 2026).
+[2026-07-05 15:49:09 datasets.packaged_modules.cache.cache](cache.py 70): WARNING Found the latest cached dataset configuration 'wikitext-2-raw-v1' at /root/.cache/huggingface/datasets/wikitext/wikitext-2-raw-v1/0.0.0/b08601e04326c79dfdd32d625aee71d232d685c3 (last modified on Sun Jul  5 15:05:25 2026).
+[2026-07-05 15:50:10 root](omniquant.py 104): INFO Starting ...
+[2026-07-05 15:50:10 root](omniquant.py 247): INFO === Start quantize layer 0 ===
+[2026-07-05 15:50:15 root](omniquant.py 339): INFO layer 0 iter 0 loss:0.0001498993660788983 norm:4.6953519472481275e-07 max memory_allocated 7890.1904296875
+[2026-07-05 15:50:18 root](omniquant.py 339): INFO layer 0 iter 1 loss:0.0001480554637964815 norm:4.961415811521874e-07 max memory_allocated 7890.1904296875
+[2026-07-05 15:50:22 root](omniquant.py 339): INFO layer 0 iter 2 loss:0.00014632169040851295 norm:5.301602641338832e-07 max memory_allocated 7890.1904296875
+[2026-07-05 15:50:26 root](omniquant.py 339): INFO layer 0 iter 3 loss:0.00014368220581673086 norm:5.711832500310265e-07 max memory_allocated 7890.1904296875
+[2026-07-05 15:50:29 root](omniquant.py 339): INFO layer 0 iter 4 loss:0.00014284875942394137 norm:6.353893695631996e-07 max memory_allocated 7890.1904296875
+[2026-07-05 15:50:33 root](omniquant.py 339): INFO layer 0 iter 5 loss:0.00014210137305781245 norm:7.213268418126972e-07 max memory_allocated 7890.1904296875
+[2026-07-05 15:50:37 root](omniquant.py 339): INFO layer 0 iter 6 loss:0.00014173910312820226 norm:8.355988256880664e-07 max memory_allocated 7890.1904296875
+[2026-07-05 15:50:41 root](omniquant.py 339): INFO layer 0 iter 7 loss:0.00013723854499403387 norm:9.446921467315406e-07 max memory_allocated 7890.1904296875
+[2026-07-05 15:50:44 root](omniquant.py 339): INFO layer 0 iter 8 loss:0.00013184561976231635 norm:1.074947249435354e-06 max memory_allocated 7890.1904296875
+[2026-07-05 15:50:48 root](omniquant.py 339): INFO layer 0 iter 9 loss:0.00012415814853738993 norm:1.2190771485620644e-06 max memory_allocated 7890.1904296875
+[2026-07-05 15:50:49 root](omniquant.py 247): INFO === Start quantize layer 1 ===
+Traceback (most recent call last):
+  File "/root/autodl-tmp/omniquant_final/code/main.py", line 388, in <module>
+    main()
+  File "/root/autodl-tmp/omniquant_final/code/main.py", line 358, in main
+    omniquant(
+  File "/root/autodl-tmp/omniquant_final/code/quantize/omniquant.py", line 332, in omniquant
+    raise FloatingPointError(
+FloatingPointError: non-finite gradient norm in baseline mode: layer=1, epoch=0, batch=1, norm=nan
+RUN_EXIT_CODE=1

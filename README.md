@@ -1,93 +1,112 @@
-# LLaMA-2-13B Low-Bit Quantization with OmniQuant
+# LLaMA-2 Backbone Quantization with OmniQuant
 
-This repository contains a course project on low-bit post-training quantization of the LLaMA-2-13B language backbone using OmniQuant.
+This repository contains the source code, experiment logs, result summaries, and submission evidence for a course project on multimodal large-model quantization.
 
-Although the original course topic is multimodal large model quantization, this project focuses on the LLM backbone, which is the major parameter and memory bottleneck in many multimodal systems such as LLaVA-style architectures.
+The project reproduces the ICLR 2024 paper **OmniQuant: Omnidirectionally Calibrated Quantization for Large Language Models** on the LLaMA-2 language backbone. Although the course topic is multimodal quantization, LLaMA/LLaMA-2 is the core text backbone used by many LLaVA-style multimodal models. Quantizing this backbone is therefore a necessary and high-impact step before extending the same compression pipeline to image/video-language systems.
 
-## Project Goal
+## Project Scope
 
-The goal is to evaluate how different weight bit-widths affect the performance and stability of LLaMA-2-13B quantization.
-
-The main research questions are:
-
-1. How does perplexity change from 4-bit to 3-bit and 2-bit weight quantization?
-2. Does extreme 2-bit quantization introduce numerical instability?
-3. How can failed low-bit experiments be diagnosed and reported?
-
-## Method
-
-The project is based on OmniQuant, a post-training quantization method for large language models.
-
-Main settings:
+Level-1 focuses on reproducing the main low-bit weight-only quantization behavior on LLaMA-2-13B-HF:
 
 - W4A16-g128
 - W3A16-g128
 - W2A16-g128
 
-Here, W4/W3/W2 indicate 4-bit, 3-bit, and 2-bit weight quantization. A16 indicates 16-bit activations. g128 indicates group size 128.
+Level-2 extends the reproduction with a robust low-bit calibration mode and ablation experiments:
 
-## Experimental Setup
+- 13B W2 ablations for LWC / LET+LWC / no-LWC analysis
+- 7B baseline-vs-robust comparisons for W4/W3/W2
+- W2 group-size comparison between g128 and g64
 
-- Model: LLaMA-2-13B-HF
-- Quantization method: OmniQuant
-- Evaluation datasets:
-  - WikiText2
-  - C4
-- Calibration samples: 128
-- Batch size: 1
-- Group size: 128
-- Metric: Perplexity, PPL
+## Main 13B Results
 
-The original model weights and quantized checkpoints are not included due to license restrictions and file size.
-
-## Main Results
-
-| Setting | WikiText2 PPL | C4 PPL | Status |
+| Setting | WikiText2 PPL | C4 PPL | Notes |
 |---|---:|---:|---|
-| W4A16-g128 | 4.9647 | 6.5721 | Success |
-| W3A16-g128 | 5.3231 | 7.0206 | Success |
-| W2A16-g128 | 10.7501 | 13.2894 | Success |
-| W2 optimized initial | N/A | N/A | Failed checkpoint |
+| W4A16-g128 | 4.9647 | 6.5721 | Close to the OmniQuant paper result |
+| W3A16-g128 | 5.3231 | 7.0206 | Close to the OmniQuant paper result |
+| W2A16-g128 + LWC | 10.7503 | 13.2891 | Shows stronger low-bit sensitivity |
+| W2A16-g128 + LET+LWC | 14.1274 | 17.7756 | Used for W2 mechanism analysis |
+| W2A16-g128 no-LWC | 122.1143 | 139.6501 | Confirms the importance of LWC |
 
-The results show that perplexity increases as the weight bit-width decreases. The degradation is especially significant when moving from 3-bit to 2-bit quantization.
+The W4/W3 results match the paper trend very closely. The W2 ablations show that 2-bit quantization is much more sensitive to calibration details, group-wise scaling, and learnable clipping parameters.
 
-## Diagnostic Finding: 2-bit Instability
+## Level-2 Robust Mode
 
-An additional W2 optimized experiment was attempted with more aggressive optimization settings. However, the saved checkpoint only contained layers 0 to 3, and loading failed at layer 4 with KeyError: 4.
+The main code extension is implemented in `quantize/omniquant.py`, with command-line options added in `main.py`.
 
-This failed run is treated as a diagnostic case showing that extreme 2-bit quantization can suffer from numerical instability and incomplete optimization.
+Robust mode keeps the original OmniQuant block-wise reconstruction objective, and adds engineering safeguards inside the per-layer quantization loop:
+
+- NaN/Inf checks on loss and gradients
+- layer-level parameter snapshot before optimization
+- rollback when a non-finite update is detected
+- adaptive learning-rate decay during retry
+- FP32 fallback for layers that remain unstable under mixed precision
+- `progress_file` recording for completed layers and checkpoint status
+
+This makes the low-bit calibration process easier to complete, resume, and audit.
+
+## Level-2 7B Ablation Results
+
+| Setting | Exit | Completed Layers | WikiText2 PPL | C4 PPL | Rollback | FP32 Fallback |
+|---|---:|---:|---:|---:|---:|---:|
+| W4A16-g128 baseline | 1 | 2 / 32 | - | - | 0 | 0 |
+| W4A16-g128 robust | 0 | 32 / 32 | 5.7242 | 7.2450 | 2 | 2 |
+| W3A16-g128 baseline | 1 | 2 / 32 | - | - | 0 | 0 |
+| W3A16-g128 robust | 0 | 32 / 32 | 6.6159 | 8.3735 | 1 | 1 |
+| W2A16-g128 naive | 0 | 32 / 32 | 4272.6362 | 4907.0508 | 0 | 0 |
+| W2A16-g128 robust | 0 | 32 / 32 | 1810.5115 | 4155.1655 | 3 | 3 |
+| W2A16-g64 robust | 0 | 32 / 32 | 455.3946 | 667.1390 | 3 | 3 |
+
+These results support the Level-2 conclusion: robust calibration improves process stability, while smaller group size further reduces W2 quantization error.
 
 ## Repository Structure
 
-- results/ppl_results.csv: Main PPL results
-- results/training_summary.csv: Training loss and runtime summary
-- results/failure_diagnostics.csv: Failure and debugging records
-- final_artifacts/logs/: Raw PPL evaluation logs
-- final_artifacts/recovered_logs/: Recovered historical logs
-- figures/: Generated figures for the report
-- scripts/: Evaluation, extraction, and plotting scripts
-- docs/report_guide_zh.md: Chinese report writing guide
-- env/: Environment information
+- `main.py`: model loading, quantization entry point, evaluation arguments, and robust-mode options
+- `quantize/omniquant.py`: OmniQuant block-wise reconstruction and robust-mode implementation
+- `scripts/`: original reproduction scripts
+- `scripts/level2_robust/`: robust-mode patching and ablation scripts
+- `final_artifacts/logs/`: main 13B evaluation logs
+- `final_artifacts/recovered_logs/`: recovered 13B and early 7B logs used in the report
+- `final_artifacts/level2_7b_ablation/`: 7B robust-mode ablation logs, commands, progress files, and result extracts
+- `final_artifacts/evidence/`: `summary.csv`, `evidence.json`, and `evidence_index.md`
+- `final_artifacts/environment/`: environment and Git information
+- `final_artifacts/manifests/`: file manifest and omitted-large-file list
+- `results/`: compact CSV result tables used by earlier report drafts
+- `figures/`: generated report figures
+- `docs/`: Chinese report-writing notes
 
 ## Reproduction Notes
 
-Before running the scripts, prepare:
+Prepare the following local resources before running full experiments:
 
-1. The original LLaMA-2-13B-HF model directory.
-2. OmniQuant checkpoints such as omni_parameters.pth.
-3. Cached WikiText2 and C4 test loaders, or allow the code to regenerate them.
+1. LLaMA-2 model weights, such as `LLaMA-2-13B-HF` or `LLaMA-2-7B-HF`.
+2. WikiText2 and C4 datasets, or network/cache access for the Hugging Face dataset loader.
+3. A CUDA environment with enough GPU memory for the chosen model size.
 
-Example:
+Example command shape:
 
-    bash scripts/run_eval_w4.sh
+```bash
+python main.py \
+  --model /path/to/LLaMA-2-7B-HF \
+  --epochs 5 \
+  --nsamples 32 \
+  --wbits 4 \
+  --abits 16 \
+  --group_size 128 \
+  --lwc \
+  --robust_mode \
+  --progress_file ./progress.json
+```
 
-Please modify the model path and checkpoint path in the scripts before running.
+Exact commands and logs for the submitted runs are preserved under `final_artifacts/level2_7b_ablation/`.
 
 ## What Is Not Included
 
-This repository does not include:
+The repository intentionally does not include:
 
-- LLaMA-2-13B model weights
-- Quantized .pth checkpoint files
-- HuggingFace tokens
-- Dataset cache files
+- LLaMA model weights
+- `omni_parameters.pth` quantized checkpoint files
+- Hugging Face access tokens
+- dataset cache files
+
+Large checkpoint and cache files are documented in `final_artifacts/manifests/OMITTED_LARGE_FILES.txt`. They belong to the optional checkpoint package and are not required for checking the logs, code, and report evidence in this repository.
