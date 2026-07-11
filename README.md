@@ -6,7 +6,7 @@
 
 本仓库整理了课程项目的可运行源码、复现实验脚本、实验日志、结果表、环境信息和 evidence 文件。项目以 OmniQuant 为基础，在 LLaMA-2-13B-HF 上复现低比特 weight-only 量化，并在复现基础上实现 `robust mode`，用于改善极低比特逐层校准过程的稳定性。
 
-虽然课程方向是多模态大模型量化，本项目首先选择 LLaMA-2 backbone 作为实验对象。原因是 LLaVA 等主流多模态大模型通常将视觉编码器输出映射到语言模型 token embedding 空间，再由 LLaMA/LLaMA-2 文本基座完成跨模态推理与文本生成。因此，稳定复现并改进 LLaMA-2 backbone 的量化，是进一步扩展到图文、视频多模态模型量化的核心基础。
+本项目选择 LLaMA-2 backbone 作为实验对象，原因是 LLaVA 等主流多模态大模型通常将视觉编码器输出映射到语言模型 token embedding 空间，再由 LLaMA/LLaMA-2 文本基座完成跨模态推理与文本生成。因此，稳定复现并改进 LLaMA-2 backbone 的量化，是进一步扩展到图文、视频多模态模型量化的核心基础。
 
 ## 作业要求对照
 
@@ -20,7 +20,7 @@
 | 结果对比与误差分析 | `final_artifacts/evidence/summary.csv`、`results/*.csv`、实验报告 |
 | 可运行源码 | `main.py`、`quantize/`、`models/`、`lm_eval/`、`scripts/` |
 | 代码、PPT、录制视频提交 | 本仓库用于代码与证据；PPT、视频和报告作为课程提交材料单独提交 |
-| 双人分工 | README 末尾给出分工说明 |
+| 双人分工 | 报告中给出了分工说明 |
 
 ## 一句话结论
 
@@ -117,7 +117,7 @@ W2 是本项目中最敏感的设置，因此我们进一步比较 LWC、LET+LWC
 
 ## 快速复核路径
 
-老师或助教如果只想快速检查，可以按下面顺序看：
+老师或助教如果想快速检查，可以按下面顺序看：
 
 1. `README.md`: 项目主线、结果表和作业要求对照。
 2. `main.py` 与 `quantize/omniquant.py`: 复现代码与 robust mode 改进。
@@ -181,13 +181,8 @@ python -u main.py \
 - 数据集缓存文件。
 - `omni_parameters.pth` 等大 checkpoint 文件。
 
-这些大文件不影响检查源码、日志和结果证据。已省略文件清单见 `final_artifacts/manifests/OMITTED_LARGE_FILES.txt`。如果课程检查需要 checkpoint，可使用单独的 optional checkpoint 包。
+这些大文件不影响检查源码、日志和结果证据。已省略文件清单见 `final_artifacts/manifests/OMITTED_LARGE_FILES.txt`。
 
-## 分工说明
-
-- 周昱航：OmniQuant 13B 主复现、W4/W3/W2 PPL 评估、部分日志整理与结果核对。
-- 季丽莎：W2 模块消融、Level-2 robust mode 实现与 7B 消融验证、报告与展示材料整理。
-- 共同完成：论文阅读、实验结果分析、误差分析、仓库 evidence 整理和最终报告撰写。
 
 ## 参考文献
 
