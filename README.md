@@ -1,4 +1,4 @@
-# LLaMA-2 Backbone Quantization with OmniQuant
+# 基于 OmniQuant 的 LLaMA-2 文本基座量化复现与改进
 
 课程项目：多模态大模型量化  
 复现论文：**OmniQuant: Omnidirectionally Calibrated Quantization for Large Language Models** (ICLR 2024)  
@@ -26,7 +26,7 @@
 
 Level-1 中，W4/W3 结果与 OmniQuant 原论文高度接近，说明复现流程可信；W2 对 LWC、group size 和逐层优化稳定性更敏感。Level-2 中，`robust mode` 将 NaN/Inf 检查、rollback、学习率衰减、FP32 fallback 和 progress file 加入逐层量化循环，使低比特校准过程更稳定、更容易复核。
 
-## Level-1: 13B 主复现结果
+## 第一部分：13B 主复现结果（Level-1）
 
 结果来自 `final_artifacts/evidence/evidence_index.md` 与 `final_artifacts/evidence/summary.csv`，报告中也采用同一口径。
 
@@ -50,7 +50,7 @@ W2 是本项目中最敏感的设置，因此我们进一步比较 LWC、LET+LWC
 
 该消融说明，2-bit weight-only 量化不仅受位宽限制，还强烈依赖 learnable weight clipping、group-wise scale 以及逐层校准过程的数值稳定性。no-LWC 相比 LWC 的 WikiText2 PPL 约为 `11.36x`，因此 LWC 是 W2 量化中最关键的组件之一。
 
-## Level-2: Robust Mode 改进
+## 第二部分：Robust Mode 稳定性改进（Level-2）
 
 `robust mode` 是本项目在复现基础上的主要代码改进。它保留 OmniQuant 原有 block-wise reconstruction 目标，在逐层优化循环中加入稳定性与可恢复机制。
 
@@ -69,11 +69,11 @@ W2 是本项目中最敏感的设置，因此我们进一步比较 LWC、LET+LWC
 5. 若混合精度路径仍不稳定，则切换 FP32 fallback。
 6. 使用 `progress_file` 记录已完成层，便于中断恢复和结果核对。
 
-## Level-2: 7B 消融验证
+## 第三部分：7B 消融验证（Level-2）
 
 7B 实验用于低成本验证稳定性趋势和改进方向，不直接替代 13B 主复现结果。
 
-| 设置 | Exit | 完整完成层数 | WikiText2 PPL ↓ | C4 PPL ↓ | Rollback | FP32 fallback |
+| 设置 | 退出码 | 完整完成层数 | WikiText2 PPL ↓ | C4 PPL ↓ | 回滚次数 | FP32 fallback 次数 |
 |---|---:|---:|---:|---:|---:|---:|
 | W4A16-g128 baseline | 1 | 1 / 32 | - | - | 0 | 0 |
 | W4A16-g128 robust | 0 | 32 / 32 | 5.7242 | 7.2450 | 2 | 2 |
@@ -189,7 +189,7 @@ python -u main.py \
 - 季丽莎：W2 模块消融、Level-2 robust mode 实现与 7B 消融验证、报告与展示材料整理。
 - 共同完成：论文阅读、实验结果分析、误差分析、仓库 evidence 整理和最终报告撰写。
 
-## Citation
+## 参考文献
 
 ```bibtex
 @inproceedings{shao2024omniquant,
