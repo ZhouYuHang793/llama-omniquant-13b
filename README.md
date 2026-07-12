@@ -67,7 +67,7 @@ W2 是本项目中最敏感的设置，因此我们进一步比较 LWC、LET+LWC
 3. 若出现异常更新，则 rollback 到当前层快照。
 4. 降低 LWC/LET 学习率后重新尝试。
 5. 若混合精度路径仍不稳定，则切换 FP32 fallback。
-6. 使用 `progress_file` 记录已完成层，便于中断恢复和结果核对。
+6. 使用 `progress_file` 记录已完成层和 checkpoint 状态，用于完整性核查、异常定位和人工恢复参考。
 
 ## 第三部分：7B 消融验证（Level-2）
 
@@ -79,8 +79,9 @@ W2 是本项目中最敏感的设置，因此我们进一步比较 LWC、LET+LWC
 | W4A16-g128 robust | 0 | 32 / 32 | 5.7242 | 7.2450 | 2 | 2 |
 | W3A16-g128 baseline | 1 | 1 / 32 | - | - | 0 | 0 |
 | W3A16-g128 robust | 0 | 32 / 32 | 6.6159 | 8.3735 | 1 | 1 |
+| W2A16-g128 baseline | 1 | 1 / 32 | - | - | 0 | 0 |
 | W2A16-g128 naive, epochs=0 | 0 | 32 / 32 | 4272.6362 | 4907.0508 | 0 | 0 |
-| W2A16-g128 robust | 0 | 32 / 32 | 1810.5115 | 4155.1655 | 3 | 3 |
+| W2A16-g128 robust (early run) | 0 | 32 / 32 | 1810.5115 | 4155.1655 | 3 | 3 |
 | W2A16-g64 robust | 0 | 32 / 32 | 455.3946 | 667.1390 | 3 | 3 |
 
 说明：
@@ -89,6 +90,7 @@ W2 是本项目中最敏感的设置，因此我们进一步比较 LWC、LET+LWC
 - naive 是 `epochs=0` 的参照，不进行 LWC 优化；robust-g128 是 `epochs=10`，同时包含 LWC 优化与 robust mode。
 - 因此，naive 到 robust-g128 的 PPL 下降应理解为“经过 LWC 优化并配合 robust mode 后的整体改善”，不能全部归因于 rollback 或 FP32 fallback。
 - robust-g64 相比 robust-g128 进一步改善 W2，说明更细粒度 group size 有助于降低极低比特量化误差。
+- W2 robust-g128 的主要精度结果采用 early robust run。另一个 `lr=1e-3` 版本虽然完成运行，但 WikiText2 出现 NaN，因此仅作为异常记录，不纳入主要精度对比。
 
 ## 仓库结构
 

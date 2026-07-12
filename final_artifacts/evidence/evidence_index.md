@@ -4,6 +4,8 @@
 - Git HEAD：3b25db6413c62581664adf0e6c2dd2f814396bab
 - Git 是否干净：否
 
+> 说明：上述 Git HEAD 与工作区状态来自 AutoDL 实验环境打包时的历史快照，用于追踪实验源码版本，不代表当前 GitHub main 分支的提交状态。
+
 ## 已核实历史结果
 
 | Case | WikiText2 | C4 | 其他 | 来源 |
